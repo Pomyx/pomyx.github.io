@@ -163,6 +163,20 @@
       padding:14px;
       backdrop-filter: blur(10px);
     }
+    .btnDonate{
+  border: none;
+  background: linear-gradient(135deg, var(--neon1), var(--neon2));
+  color: #ffffff;
+  font-weight: 800;
+  letter-spacing: .8px;
+  text-transform: uppercase;
+  box-shadow: 0 12px 40px rgba(34,211,238,.25);
+}
+.btnDonate:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 16px 55px rgba(34,211,238,.35);
+  filter: brightness(1.05);
+}
     .miniTitle{margin:0 0 10px; font-size:14px; color:var(--muted); font-weight:700; letter-spacing:.2px}
     .grid{
       display:grid; grid-template-columns: 1fr 1fr; gap:10px;
@@ -258,10 +272,12 @@
             This site is the hub for all Pomyx icon packs.
           </p>
 
-          <div class="ctaRow">
-            <a class="btn btnPrimary" href="#packs">View packs</a>
-            <a class="btn" href="privacy_policy.html">Privacy policy</a>
-          </div>
+<div class="ctaRow">
+  <a class="btn btnPrimary" href="#packs">View packs</a>
+  <a class="btn" href="privacy_policy.html">Privacy policy</a>
+  <a class="btn btnDonate" href="#" target="_blank">Donate</a>
+</div>
+
         </div>
 
         <aside class="rightCard">
