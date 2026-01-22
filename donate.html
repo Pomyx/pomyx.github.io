@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Donate – Pomyx Icons</title>
+  <meta name="description" content="Support Pomyx icon packs." />
+
+  <link rel="icon" href="pomyx_logo.png" type="image/png">
+  <link rel="apple-touch-icon" href="pomyx_logo.png">
+
+  <style>
+    :root{
+      --bg0:#07070b;
+      --bg1:#0b0b13;
+      --line: rgba(255,255,255,.10);
+      --txt:#e9e9f3;
+      --muted: rgba(233,233,243,.72);
+      --accent:#ff2d55;
+      --neon1:#7c3aed;
+      --neon2:#22d3ee;
+      --shadow: 0 20px 60px rgba(0,0,0,.55);
+      --radius: 18px;
+      --max: 860px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color:var(--txt);
+      background:
+        radial-gradient(900px 600px at 20% 10%, rgba(124,58,237,.18), transparent 55%),
+        radial-gradient(700px 500px at 80% 25%, rgba(34,211,238,.14), transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+    }
+    a{color:inherit; text-decoration:none}
+
+    .wrap{max-width:var(--max); margin:0 auto; padding:28px 18px 110px}
+
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:14px; padding:10px 0 24px;
+    }
+    .brand{display:flex; align-items:center; gap:12px;}
+    .logo{
+      width:36px; height:36px; border-radius:12px;
+      border:1px solid rgba(255,255,255,.14);
+      box-shadow: 0 10px 30px rgba(255,45,85,.18);
+      overflow:hidden;
+      background: rgba(255,255,255,.03);
+    }
+    .logo img{width:100%; height:100%; object-fit:cover; display:block;}
+    .brand h1{font-size:16px; margin:0; font-weight:750}
+    .brand span{display:block; font-size:12px; color:var(--muted); margin-top:2px}
+
+    .pill{
+      padding:10px 12px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      border-radius:999px;
+      font-size:13px;
+    }
+
+    .card{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      border-radius: var(--radius);
+      padding:22px;
+      box-shadow: var(--shadow);
+    }
+
+    h2{margin-top:0}
+    p{line-height:1.65; color:var(--muted)}
+
+    .ctaRow{display:flex; gap:12px; flex-wrap:wrap; margin-top:16px}
+
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:14px 16px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.04);
+      font-weight:750;
+      font-size:14px;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease, filter .12s ease;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.06);
+      border-color: rgba(255,255,255,.18);
+    }
+
+    .btnDonate{
+      border: none;
+      background: linear-gradient(135deg, var(--neon1), var(--neon2));
+      color: #ffffff;
+      font-weight: 900;
+      letter-spacing: .9px;
+      text-transform: uppercase;
+      box-shadow: 0 12px 40px rgba(34,211,238,.25);
+    }
+    .btnDonate:hover{
+      transform: translateY(-1px);
+      box-shadow: 0 16px 55px rgba(34,211,238,.35);
+      filter: brightness(1.05);
+    }
+
+    .note{
+      margin-top:14px;
+      font-size:12px;
+      color: rgba(233,233,243,.62);
+    }
+
+    .footer{
+      margin-top:28px;
+      padding-top:18px;
+      border-top:1px solid rgba(255,255,255,.10);
+      display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .home-fab{
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      z-index: 9999;
+      padding: 12px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(0,0,0,.55);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 18px 60px rgba(0,0,0,.55);
+      font-weight: 750;
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo">
+          <img src="pomyx_logo.png" alt="Pomyx logo">
+        </div>
+        <div>
+          <h1>Pomyx Icons</h1>
+          <span>Donate / Support</span>
+        </div>
+      </div>
+
+      <a class="pill" href="./">Home</a>
+    </div>
+
+    <div class="card">
+      <h2>Support Pomyx</h2>
+      <p>
+        If you enjoy my icon packs and want to support future releases, you can donate in just a few clicks.
+        Every contribution helps me keep creating new seasonal packs.
+      </p>
+
+      <div class="ctaRow">
+        <!-- ✅ Replace this link with your Buy Me a Coffee or Ko-fi link -->
+        <a class="btn btnDonate" href="https://buymeacoffee.com/pomyx" target="_blank" rel="noreferrer">
+          DONATE
+        </a>
+
+        <a class="btn" href="privacy_policy.html">Privacy Policy</a>
+      </div>
+
+      <div class="note">
+        Tip: I don’t process payments on this website. Donations are handled by the external platform you choose.
+      </div>
+    </div>
+
+    <div class="footer">
+      <div>© <span id="y"></span> Pomyx</div>
+      <div>
+        <a href="./">Home</a>
+        <span style="opacity:.5"> • </span>
+        <a href="privacy_policy.html">Privacy Policy</a>
+      </div>
+    </div>
+  </div>
+
+  <a class="home-fab" href="./">Home</a>
+
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
