@@ -13,7 +13,6 @@
     :root{
       --bg0:#07070b;
       --bg1:#0b0b13;
-      --card: rgba(255,255,255,.06);
       --line: rgba(255,255,255,.10);
       --txt:#e9e9f3;
       --muted: rgba(233,233,243,.70);
@@ -21,7 +20,7 @@
       --shadow: 0 16px 60px rgba(0,0,0,.55);
       --radius: 18px;
 
-      /* Easter-ish pastel accents */
+      /* Easter-ish accents */
       --a1:#ff7cc8;
       --a2:#5fe0ff;
       --a3:#ffd36a;
@@ -47,14 +46,13 @@
     a{ color:inherit; text-decoration:none; }
     a:hover{ text-decoration:none; }
 
-    /* extra bottom padding so the floating button never covers footer content */
     .wrap{
       max-width: 1100px;
       margin: 0 auto;
       padding: 22px 16px 110px;
     }
 
-    /* Top bar */
+    /* Topbar */
     .topbar{
       display:flex;
       align-items:center;
@@ -112,7 +110,26 @@
       color: var(--txt);
     }
 
-    /* Cards */
+    /* Grid */
+    .grid{
+      margin-top: 16px;
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 14px;
+      align-items: start; /* ✅ stable (no forced stretching) */
+    }
+    @media (max-width: 920px){
+      .grid{ grid-template-columns: 1fr; }
+      .brand{ min-width:auto; }
+    }
+
+    /* Left column: 2 cards stacked */
+    .leftcol{
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+
     .card{
       border: 1px solid var(--line);
       background: rgba(255,255,255,.035);
@@ -123,7 +140,6 @@
       padding: 16px;
     }
 
-    /* Title gradient */
     .grad{
       background: linear-gradient(90deg, var(--a1), var(--a2), var(--a3), var(--a4));
       -webkit-background-clip: text;
@@ -147,12 +163,6 @@
       color: var(--muted);
     }
     .bullets li{ margin: 6px 0; }
-
-    .sep{
-      height:1px;
-      background: rgba(255,255,255,.10);
-      margin: 12px 0;
-    }
 
     .btnrow{
       display:flex;
@@ -192,31 +202,10 @@
       margin-top: 10px;
     }
 
-    /* ✅ Layout: robust grid (no “fill height” hacks on mobile) */
-    .grid{
-      margin-top: 16px;
-      display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: 14px;
-      align-items: start;
-    }
-
-    @media (max-width: 920px){
-      .grid{ grid-template-columns: 1fr; }
-      .brand{ min-width:auto; }
-    }
-
-    /* ✅ Desktop-only equal-height trick (safe) */
-    @media (min-width: 921px){
-      .grid{ align-items: stretch; }
-      .leftcol{ height: 100%; display:flex; flex-direction:column; gap:14px; min-height:0; }
-      .showcaseCard{ flex: 1; min-height: 180px; }
-    }
-
-    /* ✅ Mobile: natural stacking */
-    @media (max-width: 920px){
-      .leftcol{ display:flex; flex-direction:column; gap:14px; }
-      .showcaseCard{ min-height: 200px; }
+    .sep{
+      height:1px;
+      background: rgba(255,255,255,.10);
+      margin: 12px 0;
     }
 
     /* Video card */
@@ -229,7 +218,6 @@
       gap: 12px;
       padding-top: 2px;
     }
-
     .video{
       border-radius: 14px;
       overflow:hidden;
@@ -245,12 +233,20 @@
       display:block;
     }
 
-    /* ✅ Showcase */
+    /* ✅ Showcase card: fixed/clamped height so it can NEVER “explode” */
     .showcaseCard{
       display:flex;
       flex-direction:column;
       gap:10px;
       overflow:hidden;
+
+      /* desktop: feels like it reaches near the right card bottom without breaking layout */
+      height: clamp(240px, 34vh, 360px);
+    }
+    @media (max-width: 920px){
+      .showcaseCard{
+        height: clamp(220px, 32vh, 320px);
+      }
     }
 
     .showcaseHint{
@@ -260,10 +256,11 @@
       line-height: 1.35;
     }
 
-    /* ✅ Manual scroll row (works on phone + PC) */
+    /* ✅ The actual scroll area (user controlled) */
     .carousel{
-      flex: 1;
+      flex: 1;                 /* fill remaining space inside the card */
       min-height: 140px;
+      height: 100%;
 
       display:flex;
       align-items:center;
@@ -276,22 +273,23 @@
 
       overflow-x: auto;
       overflow-y: hidden;
+      white-space: nowrap;     /* ✅ never wrap */
+      flex-wrap: nowrap;       /* ✅ never wrap */
 
-      scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
+      scroll-snap-type: x mandatory;
 
-      /* critical: never wrap */
-      flex-wrap: nowrap;
-
-      /* makes drag feel natural */
       cursor: grab;
 
-      /* keeps scrollbar space stable (so layout won’t jump) */
-      scrollbar-gutter: stable both-edges;
+      /* IMPORTANT: allow vertical page scroll, but keep horizontal drag working */
+      touch-action: pan-y;
+      user-select: none;
     }
-    .carousel:active{ cursor: grabbing; }
+    .carousel.dragging{
+      cursor: grabbing;
+    }
 
-    /* Scrollbar visible enough (optional but helpful) */
+    /* scrollbar visible (so user sees it’s scrollable) */
     .carousel::-webkit-scrollbar{ height: 10px; }
     .carousel::-webkit-scrollbar-thumb{
       background: rgba(255,255,255,.14);
@@ -322,9 +320,10 @@
       object-fit: contain;
       display:block;
       filter: drop-shadow(0 10px 18px rgba(0,0,0,.35));
-      pointer-events: none; /* ✅ so dragging doesn't get “stuck” on images */
-      user-select: none;
+
+      pointer-events: none;  /* ✅ crucial for drag */
       -webkit-user-drag: none;
+      user-select: none;
     }
 
     .footer{
@@ -334,7 +333,7 @@
       text-align:center;
     }
 
-    /* Floating "Top" button (same style as index) */
+    /* Floating "Top" button */
     .home-fab{
       position: fixed;
       right: 16px;
@@ -362,7 +361,6 @@
   <div id="top"></div>
 
   <div class="wrap">
-    <!-- Topbar -->
     <header class="topbar">
       <div class="brand">
         <img src="pomyx_logo.png" alt="Pomyx logo">
@@ -379,7 +377,6 @@
       </nav>
     </header>
 
-    <!-- Main grid -->
     <section class="grid">
       <!-- LEFT -->
       <div class="leftcol">
@@ -418,10 +415,10 @@
           </div>
         </div>
 
-        <!-- ✅ Egg showcase (manual scroll + drag) -->
+        <!-- ✅ Egg showcase -->
         <div class="card showcaseCard">
           <h2><span class="grad">Egg icon showcase</span></h2>
-          <p class="showcaseHint">Swipe on mobile / drag with mouse on PC (you control the speed).</p>
+          <p class="showcaseHint">Swipe on mobile / drag with mouse on PC.</p>
 
           <div class="carousel" id="eggCarousel" aria-label="Egg icon carousel">
             <div class="egg"><img src="eggs_images/egg_01.png" alt="Egg icon 1"></div>
@@ -473,31 +470,38 @@
     // footer year
     document.getElementById("y").textContent = new Date().getFullYear();
 
-    // ✅ Mouse drag-to-scroll for desktop
-    (function () {
+    // ✅ Drag-to-scroll (mouse + touch + pen) using Pointer Events
+    (function(){
       const el = document.getElementById("eggCarousel");
-      if (!el) return;
+      if(!el) return;
 
       let isDown = false;
       let startX = 0;
       let scrollLeft = 0;
 
-      el.addEventListener("mousedown", (e) => {
+      el.addEventListener("pointerdown", (e) => {
         isDown = true;
-        startX = e.pageX - el.offsetLeft;
+        el.classList.add("dragging");
+        el.setPointerCapture(e.pointerId);
+        startX = e.clientX;
         scrollLeft = el.scrollLeft;
       });
 
-      window.addEventListener("mouseup", () => { isDown = false; });
-      window.addEventListener("mouseleave", () => { isDown = false; });
-
-      el.addEventListener("mousemove", (e) => {
-        if (!isDown) return;
+      el.addEventListener("pointermove", (e) => {
+        if(!isDown) return;
         e.preventDefault();
-        const x = e.pageX - el.offsetLeft;
-        const walk = (x - startX) * 1.2; // speed factor
-        el.scrollLeft = scrollLeft - walk;
+        const dx = e.clientX - startX;
+        el.scrollLeft = scrollLeft - dx;
       });
+
+      const end = () => {
+        isDown = false;
+        el.classList.remove("dragging");
+      };
+
+      el.addEventListener("pointerup", end);
+      el.addEventListener("pointercancel", end);
+      el.addEventListener("pointerleave", end);
     })();
   </script>
 </body>
