@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pomyx Easter Icon Pack</title>
+  <meta name="description" content="Pomyx Easter Icon Pack — pastel spring icons, clean shapes, unique design." />
+
+  <link rel="icon" href="pomyx_logo.png" type="image/png">
+  <link rel="apple-touch-icon" href="pomyx_logo.png">
+
+  <style>
+    :root{
+      --bg0:#07070b;
+      --bg1:#0b0b13;
+      --card: rgba(255,255,255,.06);
+      --line: rgba(255,255,255,.10);
+      --txt:#e9e9f3;
+      --muted: rgba(233,233,243,.70);
+
+      --shadow: 0 16px 60px rgba(0,0,0,.55);
+      --radius: 18px;
+
+      /* Easter-ish pastel accents */
+      --a1:#ffd6e7;  /* pink */
+      --a2:#d7f7ff;  /* light cyan */
+      --a3:#fff1c7;  /* warm yellow */
+      --a4:#d9ffd8;  /* mint */
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      color:var(--txt);
+      font: 15px/1.55 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background:
+        radial-gradient(1200px 700px at 20% -10%, rgba(255,214,231,.10), transparent 55%),
+        radial-gradient(1200px 700px at 90% 10%, rgba(215,247,255,.09), transparent 55%),
+        radial-gradient(1000px 700px at 60% 110%, rgba(255,241,199,.07), transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      overflow-x:hidden;
+    }
+
+    a{ color:inherit; text-decoration:none; }
+    a:hover{ text-decoration:none; }
+
+    .wrap{
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 22px 16px 44px;
+    }
+
+    /* Top bar */
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width: 220px;
+    }
+    .brand img{
+      width:38px; height:38px;
+      border-radius: 12px;
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.04);
+    }
+    .brand .title{
+      display:flex;
+      flex-direction:column;
+      line-height:1.1;
+    }
+    .brand .title b{ font-size: 14px; letter-spacing:.2px; }
+    .brand .title span{ font-size: 12px; color: var(--muted); }
+
+    .nav{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .pill{
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      transition: transform .12s ease, background .12s ease;
+      font-size: 13px;
+      color: var(--muted);
+      white-space:nowrap;
+    }
+    .pill:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.06);
+      color: var(--txt);
+    }
+
+    /* Hero */
+    .hero{
+      margin-top: 18px;
+      padding: 18px 16px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .hero h1{
+      margin: 0 0 8px 0;
+      font-size: 22px;
+      letter-spacing: .2px;
+    }
+    .grad{
+      background: linear-gradient(90deg, var(--a1), var(--a2), var(--a3));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .hero p{
+      margin: 0;
+      color: var(--muted);
+      max-width: 80ch;
+    }
+
+    /* Grid */
+    .grid{
+      margin-top: 16px;
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 14px;
+    }
+    @media (max-width: 920px){
+      .grid{ grid-template-columns: 1fr; }
+      .brand{ min-width:auto; }
+    }
+
+    .card{
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.035);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 16px;
+    }
+
+    .card h2{
+      margin: 0 0 10px 0;
+      font-size: 16px;
+      letter-spacing: .2px;
+    }
+
+    .desc{
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .bullets{
+      margin: 12px 0 0;
+      padding: 0 0 0 18px;
+      color: var(--muted);
+    }
+    .bullets li{ margin: 6px 0; }
+
+    .btnrow{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 14px;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color: var(--txt);
+      font-size: 13px;
+      transition: transform .12s ease, background .12s ease;
+      cursor:pointer;
+      user-select:none;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.07);
+    }
+
+    .btn.primary{
+      border-color: rgba(255,214,231,.35);
+      background: linear-gradient(180deg, rgba(255,214,231,.14), rgba(255,255,255,.04));
+    }
+
+    .small{
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+
+    /* Video embed */
+    .video{
+      border-radius: 14px;
+      overflow:hidden;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.25);
+      aspect-ratio: 9 / 16;
+      max-height: 540px;
+    }
+    .video iframe{
+      width:100%;
+      height:100%;
+      border:0;
+      display:block;
+    }
+
+    .footer{
+      margin-top: 18px;
+      color: rgba(233,233,243,.55);
+      font-size: 12px;
+      text-align:center;
+    }
+    .sep{
+      height:1px;
+      background: rgba(255,255,255,.10);
+      margin: 12px 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <!-- Topbar -->
+    <header class="topbar">
+      <div class="brand">
+        <img src="pomyx_logo.png" alt="Pomyx logo">
+        <div class="title">
+          <b>Pomyx Icon Packs</b>
+          <span>Easter Icon Pack</span>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a class="pill" href="index.html">Home</a>
+        <a class="pill" href="https://play.google.com/store/apps/details?id=com.pomyx.iconpack.easter" target="_blank" rel="noopener">Play</a>
+        <a class="pill" href="https://play.google.com/apps/testing/com.pomyx.iconpack.easter" target="_blank" rel="noopener">Join Test</a>
+        <a class="pill" href="https://youtube.com/shorts/i16OniDatKk?si=O7fWHRR7xqAnvFGQ" target="_blank" rel="noopener">Video</a>
+      </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+      <h1><span class="grad">Pomyx Easter Icon Pack</span></h1>
+      <p>
+        A warm, spring-themed Android icon pack with pastel vibes, clean shapes, and a hand-made “Pomyx” style.
+        Built for a cozy Easter home screen — simple, unique, and readable on both light and dark wallpapers.
+      </p>
+    </section>
+
+    <!-- Main grid -->
+    <section class="grid">
+      <!-- Left: description + test links -->
+      <div class="card">
+        <h2><span class="grad">About this pack</span></h2>
+        <p class="desc">
+          This is my Easter-themed pack: soft pastel colors, smooth gradients, and custom egg-style icons.
+          The goal is a playful look that still feels clean and premium on modern Android launchers.
+        </p>
+
+        <ul class="bullets">
+          <li>Pastel spring palette + subtle gradients</li>
+          <li>Unique “egg” icon style (Pomyx signature)</li>
+          <li>Made for modern launchers (Nova / others)</li>
+        </ul>
+
+        <div class="sep"></div>
+
+        <h2><span class="grad">Closed testing</span></h2>
+        <p class="desc">
+          If you’re in my closed test list, you can install it from Play and help me test the release build.
+        </p>
+
+        <div class="btnrow">
+          <a class="btn primary" href="https://play.google.com/apps/testing/com.pomyx.iconpack.easter" target="_blank" rel="noopener">
+            Join closed test
+          </a>
+          <a class="btn" href="https://play.google.com/store/apps/details?id=com.pomyx.iconpack.easter" target="_blank" rel="noopener">
+            Open Play listing
+          </a>
+        </div>
+
+        <div class="small">
+          Tip: open the “Join closed test” link first, then install from the Play listing.
+        </div>
+      </div>
+
+      <!-- Right: video card (like QR-card slot) -->
+      <div class="card">
+        <h2><span class="grad">Short demo video</span></h2>
+
+        <!-- YouTube Shorts embed (privacy-enhanced domain) -->
+        <div class="video" title="Pomyx Easter Icon Pack demo">
+          <iframe
+            src="https://www.youtube-nocookie.com/embed/i16OniDatKk"
+            title="Pomyx Easter Icon Pack demo"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+          </iframe>
+        </div>
+
+        <div class="btnrow">
+          <a class="btn primary" href="https://youtube.com/shorts/i16OniDatKk?si=O7fWHRR7xqAnvFGQ" target="_blank" rel="noopener">
+            Watch on YouTube
+          </a>
+        </div>
+
+        <div class="small">
+          If the embed acts weird on mobile, the “Watch on YouTube” button is the safe option.
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">
+      © <span id="y"></span> Pomyx • Hobby-made icon packs
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
