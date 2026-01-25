@@ -323,61 +323,55 @@
     }
 
     /* ✅ Easter pack card - full image fill (no visible text), stable on mobile */
-    .pack-easter{
-      position: relative;
-      overflow: hidden;
-      padding:0;                       /* no inner padding so image reaches edges */
+/* ✅ Easter pack card - image fills perfectly (no bottom strip) */
+.pack-easter{
+  position: relative;
+  overflow: hidden;
+  padding: 0;                 /* override .card padding */
+  min-height: 150px;
+  cursor: pointer;
+  background: transparent;    /* so .card bg never shows through */
 
-      background-image: url("pomyx_easter_playstore.png");
-      background-repeat: no-repeat;
-      background-size: cover;          /* fills the card */
-      background-position: left top;   /* keep title visible on top-left */
+  transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+}
 
-      min-height: 150px;               /* stable height even when empty */
-      background-color: rgba(0,0,0,.18);
+/* The image itself */
+.pack-easter img{
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;          /* fills the card */
+  object-position: left top;  /* keep the title visible top-left */
+}
 
-      cursor: pointer;
-      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
-    }
+/* Overlay full cover, no stripe */
+.pack-easter::before{
+  content:"";
+  position:absolute;
+  top:-1px; left:-1px; right:-1px; bottom:-1px;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,.52) 0%,
+    rgba(0,0,0,.16) 60%,
+    rgba(0,0,0,.05) 100%
+  );
+  pointer-events:none;
+}
 
-    /* overlay full cover, no light stripe */
-    .pack-easter::before{
-      content:"";
-      position:absolute;
-      top:-1px; left:-1px; right:-1px; bottom:-1px;
-      background: linear-gradient(
-        to top,
-        rgba(0,0,0,.52) 0%,
-        rgba(0,0,0,.16) 60%,
-        rgba(0,0,0,.05) 100%
-      );
-      pointer-events:none;
-    }
+.pack-easter:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 18px 55px rgba(0,0,0,.45);
+  border-color: rgba(255,255,255,.25);
+}
 
-    .pack-easter:hover{
-      transform: translateY(-2px);
-      box-shadow: 0 18px 55px rgba(0,0,0,.45);
-      border-color: rgba(255,255,255,.25);
-    }
+.pack-easter:focus-visible{
+  outline: 3px solid rgba(255,255,255,.85);
+  outline-offset: 4px;
+}
 
-    .pack-easter:focus-visible{
-      outline: 3px solid rgba(255,255,255,.85);
-      outline-offset: 4px;
-    }
-
-    @media (min-width: 900px){
-      .pack-easter{ min-height: 170px; }
-    }
-
-    @media (max-width: 900px){
-      .hero-inner{grid-template-columns: 1fr}
-      .title{font-size:38px}
-      .section{grid-template-columns: 1fr}
-      .grid{grid-template-columns: 1fr 1fr}
-    }
-    @media (max-width: 520px){
-      .grid{grid-template-columns: 1fr}
-    }
+@media (min-width: 900px){
+  .pack-easter{ min-height: 170px; }
+}
   </style>
 </head>
 
@@ -453,8 +447,9 @@
 
     <section id="packs" class="section" aria-label="Icon packs">
       <!-- ✅ Easter image button card -->
-      <a class="card pack-easter" href="easter.html" aria-label="Open Pomyx Easter Icon Pack page"></a>
-
+<a class="card pack-easter" href="easter.html" aria-label="Open Pomyx Easter Icon Pack page">
+  <img src="pomyx_easter_playstore.png" alt="">
+</a>
       <div class="card">
         <h3>More packs</h3>
         <p>
