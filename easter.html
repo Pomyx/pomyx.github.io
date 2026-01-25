@@ -140,7 +140,7 @@
       padding: 16px;
     }
 
-    /* Title gradient – stronger + more “pop” */
+    /* Title gradient */
     .grad{
       background: linear-gradient(90deg, var(--a1), var(--a2), var(--a3), var(--a4));
       -webkit-background-clip: text;
@@ -212,7 +212,7 @@
       margin: 12px 0;
     }
 
-    /* Video card compact + centered content */
+    /* Video card */
     .videoCard{
       padding: 14px 16px 16px;
     }
@@ -225,7 +225,6 @@
       padding-top: 2px;
     }
 
-    /* Slightly smaller embed area */
     .video{
       border-radius: 14px;
       overflow:hidden;
@@ -241,7 +240,10 @@
       display:block;
     }
 
-    /* ===== Facebook-story style egg showcase (fixed height + smaller tiles) ===== */
+    /* ===========================
+       EGG SHOWCASE (Facebook-like)
+       =========================== */
+
     .showcaseCard{
       padding: 14px 16px 16px;
     }
@@ -253,61 +255,51 @@
       line-height: 1.35;
     }
 
-    /* Fixed height rail so it can NEVER stretch the page */
+    /* IMPORTANT:
+       This creates a smaller “window” instead of full width.
+       On mobile it’s still not edge-to-edge, so it feels like a story rail. */
+    .storyWindow{
+      width: min(560px, calc(100% - 24px));
+      margin: 0 auto;
+    }
+
+    /* Fixed height so it can NEVER stretch the page */
     .storyWrap{
       position: relative;
-      height: 120px;                 /* ✅ low, stable height */
+      height: 120px;
       border-radius: 14px;
       border: 1px solid rgba(255,255,255,.10);
       background: rgba(0,0,0,.18);
       overflow: hidden;
     }
 
+    /* the actual scroll container */
     .storyScroller{
+      height: 100%;
+      overflow: hidden; /* hide native scrollbars completely */
+      position: relative;
+      touch-action: none; /* we handle drag ourselves */
+    }
+
+    /* inner track that is wider than the window (we move via scrollLeft) */
+    .storyTrack{
       height: 100%;
       display:flex;
       align-items:center;
-      gap: 10px;                     /* tighter spacing */
+      justify-content:flex-start; /* never spread items */
+      gap: 10px;
       padding: 10px;
-
-      overflow-x: auto;
-      overflow-y: hidden;
-      white-space: nowrap;
-      flex-wrap: nowrap;
-
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-
-      /* allow horizontal gestures; we also lock with JS */
-      touch-action: pan-x;
-      overscroll-behavior-x: contain;
-
+      width: max-content;
+      will-change: transform;
       user-select: none;
-      cursor: grab;
-
-      scrollbar-width: thin;
-      scrollbar-color: rgba(255,255,255,.18) transparent;
     }
-    .storyScroller.dragging{ cursor: grabbing; }
-
-    .storyScroller::-webkit-scrollbar{ height: 10px; }
-    .storyScroller::-webkit-scrollbar-thumb{
-      background: rgba(255,255,255,.16);
-      border-radius: 999px;
-      border: 2px solid rgba(0,0,0,.10);
-    }
-    .storyScroller::-webkit-scrollbar-track{ background: transparent; }
 
     .egg{
-      scroll-snap-align: start;
       flex: 0 0 auto;
-
-      width: 72px;                   /* ✅ smaller tile */
+      width: 72px;
       height: 72px;
-
       display:grid;
       place-items:center;
-
       border-radius: 16px;
       border: 1px solid rgba(255,255,255,.12);
       background: rgba(255,255,255,.03);
@@ -320,28 +312,44 @@
       object-fit: contain;
       display:block;
       filter: drop-shadow(0 10px 18px rgba(0,0,0,.35));
-
       pointer-events: none;
       -webkit-user-drag: none;
       user-select: none;
     }
 
-    /* Desktop arrows */
+    /* Fades on edges (nice story vibe) */
+    .fadeEdge{
+      position:absolute;
+      top:0; bottom:0;
+      width: 54px;
+      pointer-events:none;
+      z-index: 3;
+    }
+    .fadeEdge.left{
+      left:0;
+      background: linear-gradient(90deg, rgba(0,0,0,.65), transparent);
+    }
+    .fadeEdge.right{
+      right:0;
+      background: linear-gradient(270deg, rgba(0,0,0,.65), transparent);
+    }
+
+    /* Desktop arrow buttons */
     .storyBtn{
       position:absolute;
       top:50%;
       transform: translateY(-50%);
-      z-index: 10;
+      z-index: 4;
 
       width: 38px;
       height: 38px;
       border-radius: 999px;
 
-      display:none; /* desktop only */
+      display:none;
       place-items:center;
 
       border: 1px solid rgba(255,255,255,.18);
-      background: rgba(0,0,0,.65);
+      background: rgba(0,0,0,.70);
       color: #fff;
 
       box-shadow: 0 14px 40px rgba(0,0,0,.55);
@@ -349,8 +357,7 @@
       user-select:none;
       padding:0;
     }
-    .storyBtn:hover{ background: rgba(0,0,0,.78); }
-
+    .storyBtn:hover{ background: rgba(0,0,0,.82); }
     .storyBtn.left{ left: 8px; }
     .storyBtn.right{ right: 8px; }
 
@@ -366,22 +373,6 @@
 
     @media (min-width: 921px){
       .storyBtn{ display:grid; }
-
-      .fadeEdge{
-        position:absolute;
-        top:0; bottom:0;
-        width: 56px;
-        pointer-events:none;
-        z-index: 6;
-      }
-      .fadeEdge.left{
-        left:0;
-        background: linear-gradient(90deg, rgba(0,0,0,.55), transparent);
-      }
-      .fadeEdge.right{
-        right:0;
-        background: linear-gradient(270deg, rgba(0,0,0,.55), transparent);
-      }
     }
 
     .footer{
@@ -391,7 +382,7 @@
       text-align:center;
     }
 
-    /* Floating "Top" button (index style) */
+    /* Floating "Top" button */
     .home-fab{
       position: fixed;
       right: 16px;
@@ -438,9 +429,8 @@
 
     <!-- Main grid -->
     <section class="grid">
-      <!-- LEFT column -->
+      <!-- LEFT -->
       <div class="leftcol">
-        <!-- About + closed test card -->
         <div class="card">
           <h2><span class="grad">Pomyx Easter Icon Pack</span></h2>
 
@@ -476,39 +466,44 @@
           </div>
         </div>
 
-        <!-- Egg showcase card -->
+        <!-- Egg icon showcase -->
         <div class="card showcaseCard">
           <h2><span class="grad">Egg icon showcase</span></h2>
-          <p class="showcaseHint">Swipe on mobile • Use arrows on desktop</p>
+          <p class="showcaseHint">Drag / swipe to scroll • Infinite loop</p>
 
-          <div class="storyWrap">
-            <div class="fadeEdge left"></div>
-            <div class="fadeEdge right"></div>
+          <div class="storyWindow">
+            <div class="storyWrap" aria-label="Egg icon scroller">
+              <div class="fadeEdge left"></div>
+              <div class="fadeEdge right"></div>
 
-            <button class="storyBtn left" type="button" aria-label="Scroll left" id="btnLeft">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
-            </button>
-            <button class="storyBtn right" type="button" aria-label="Scroll right" id="btnRight">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
-            </button>
+              <button class="storyBtn left" type="button" aria-label="Scroll left" id="btnLeft">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+              </button>
+              <button class="storyBtn right" type="button" aria-label="Scroll right" id="btnRight">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+              </button>
 
-            <div class="storyScroller" id="storyScroller" aria-label="Egg icon scroller">
-              <div class="egg"><img src="eggs_images/egg_01.png" alt="Egg icon 1"></div>
-              <div class="egg"><img src="eggs_images/egg_02.png" alt="Egg icon 2"></div>
-              <div class="egg"><img src="eggs_images/egg_03.png" alt="Egg icon 3"></div>
-              <div class="egg"><img src="eggs_images/egg_04.png" alt="Egg icon 4"></div>
-              <div class="egg"><img src="eggs_images/egg_05.png" alt="Egg icon 5"></div>
-              <div class="egg"><img src="eggs_images/egg_06.png" alt="Egg icon 6"></div>
-              <div class="egg"><img src="eggs_images/egg_07.png" alt="Egg icon 7"></div>
-              <div class="egg"><img src="eggs_images/egg_08.png" alt="Egg icon 8"></div>
-              <div class="egg"><img src="eggs_images/egg_09.png" alt="Egg icon 9"></div>
-              <div class="egg"><img src="eggs_images/egg_10.png" alt="Egg icon 10"></div>
+              <div class="storyScroller" id="storyScroller">
+                <div class="storyTrack" id="storyTrack">
+                  <!-- ORIGINAL 10 -->
+                  <div class="egg"><img src="eggs_images/egg_01.png" alt="Egg icon 1"></div>
+                  <div class="egg"><img src="eggs_images/egg_02.png" alt="Egg icon 2"></div>
+                  <div class="egg"><img src="eggs_images/egg_03.png" alt="Egg icon 3"></div>
+                  <div class="egg"><img src="eggs_images/egg_04.png" alt="Egg icon 4"></div>
+                  <div class="egg"><img src="eggs_images/egg_05.png" alt="Egg icon 5"></div>
+                  <div class="egg"><img src="eggs_images/egg_06.png" alt="Egg icon 6"></div>
+                  <div class="egg"><img src="eggs_images/egg_07.png" alt="Egg icon 7"></div>
+                  <div class="egg"><img src="eggs_images/egg_08.png" alt="Egg icon 8"></div>
+                  <div class="egg"><img src="eggs_images/egg_09.png" alt="Egg icon 9"></div>
+                  <div class="egg"><img src="eggs_images/egg_10.png" alt="Egg icon 10"></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- RIGHT column: video -->
+      <!-- RIGHT: video -->
       <div class="card videoCard">
         <h2><span class="grad">Short demo video</span></h2>
 
@@ -543,42 +538,111 @@
     // footer year
     document.getElementById("y").textContent = new Date().getFullYear();
 
-    // arrows + touch-lock (so the page doesn't scroll when swiping the rail)
+    // =========================
+    // Infinite loop story rail
+    // =========================
     (function(){
       const scroller = document.getElementById("storyScroller");
-      const leftBtn = document.getElementById("btnLeft");
-      const rightBtn = document.getElementById("btnRight");
-      if(!scroller) return;
+      const track = document.getElementById("storyTrack");
+      const btnLeft = document.getElementById("btnLeft");
+      const btnRight = document.getElementById("btnRight");
+      if(!scroller || !track) return;
 
-      // desktop buttons
-      function step(){
-        // scroll by ~5 small tiles
-        return 72 * 5;
+      // Duplicate the 10 eggs twice => 30 total (orig + clone + clone)
+      const originalHTML = track.innerHTML;
+      track.innerHTML = originalHTML + originalHTML + originalHTML;
+
+      let oneSetWidth = 0;
+
+      function measure(){
+        // width of one original set = totalWidth / 3 (because we duplicated to 3 sets)
+        const total = track.scrollWidth;
+        oneSetWidth = Math.floor(total / 3);
+        // Start in the middle set so we can scroll both directions infinitely
+        scroller.scrollLeft = oneSetWidth;
       }
-      if(leftBtn) leftBtn.addEventListener("click", () => scroller.scrollBy({ left: -step(), behavior: "smooth" }));
-      if(rightBtn) rightBtn.addEventListener("click", () => scroller.scrollBy({ left: step(), behavior: "smooth" }));
 
-      // touch: lock horizontal intent and prevent page move
-      let startX = 0, startY = 0, locked = false;
+      // Wait images to load for accurate width
+      const imgs = track.querySelectorAll("img");
+      let loaded = 0;
+      imgs.forEach(img => {
+        if(img.complete) { loaded++; return; }
+        img.addEventListener("load", () => { loaded++; if(loaded === imgs.length) measure(); }, { once:true });
+        img.addEventListener("error", () => { loaded++; if(loaded === imgs.length) measure(); }, { once:true });
+      });
 
-      scroller.addEventListener("touchstart", (e) => {
-        if (!e.touches || e.touches.length !== 1) return;
-        const t = e.touches[0];
-        startX = t.clientX;
-        startY = t.clientY;
-        locked = false;
-      }, { passive: true });
+      // Fallback if many are already cached
+      setTimeout(measure, 300);
 
-      scroller.addEventListener("touchmove", (e) => {
-        if (!e.touches || e.touches.length !== 1) return;
-        const t = e.touches[0];
-        const dx = Math.abs(t.clientX - startX);
-        const dy = Math.abs(t.clientY - startY);
+      // Keep it looping
+      function normalize(){
+        if(!oneSetWidth) return;
+        // If we go too far left, jump forward
+        if(scroller.scrollLeft <= oneSetWidth * 0.25){
+          scroller.scrollLeft += oneSetWidth;
+        }
+        // If we go too far right, jump back
+        else if(scroller.scrollLeft >= oneSetWidth * 1.75){
+          scroller.scrollLeft -= oneSetWidth;
+        }
+      }
 
-        // if horizontal intent, prevent page scroll
-        if (!locked && dx > 6 && dx > dy) locked = true;
-        if (locked) e.preventDefault();
-      }, { passive: false });
+      scroller.addEventListener("scroll", () => {
+        // normalize during scroll (lightweight)
+        normalize();
+      }, { passive:true });
+
+      // Desktop buttons
+      function step(){
+        // ~4 tiles per click
+        return 72 * 4;
+      }
+      if(btnLeft) btnLeft.addEventListener("click", () => {
+        scroller.scrollLeft -= step();
+        normalize();
+      });
+      if(btnRight) btnRight.addEventListener("click", () => {
+        scroller.scrollLeft += step();
+        normalize();
+      });
+
+      // Drag / swipe (pointer events) — so the page won't move on mobile
+      let isDown = false;
+      let startX = 0;
+      let startScrollLeft = 0;
+
+      scroller.addEventListener("pointerdown", (e) => {
+        isDown = true;
+        scroller.setPointerCapture(e.pointerId);
+        startX = e.clientX;
+        startScrollLeft = scroller.scrollLeft;
+      });
+
+      scroller.addEventListener("pointermove", (e) => {
+        if(!isDown) return;
+        e.preventDefault();
+        const dx = e.clientX - startX;
+        scroller.scrollLeft = startScrollLeft - dx;
+        normalize();
+      }, { passive:false });
+
+      scroller.addEventListener("pointerup", (e) => {
+        isDown = false;
+        try { scroller.releasePointerCapture(e.pointerId); } catch(_) {}
+      });
+
+      scroller.addEventListener("pointercancel", (e) => {
+        isDown = false;
+        try { scroller.releasePointerCapture(e.pointerId); } catch(_) {}
+      });
+
+      // Re-measure on resize
+      window.addEventListener("resize", () => {
+        // keep current relative position in middle set after resize
+        const rel = oneSetWidth ? (scroller.scrollLeft % oneSetWidth) : 0;
+        measure();
+        scroller.scrollLeft = oneSetWidth + rel;
+      });
     })();
   </script>
 </body>
