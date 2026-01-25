@@ -13,7 +13,10 @@
     :root{
       --bg0:#07070b;
       --bg1:#0b0b13;
+
+      --card: rgba(255,255,255,.035);
       --line: rgba(255,255,255,.10);
+
       --txt:#e9e9f3;
       --muted: rgba(233,233,243,.70);
 
@@ -46,6 +49,7 @@
     a{ color:inherit; text-decoration:none; }
     a:hover{ text-decoration:none; }
 
+    /* extra bottom padding so floating button never covers footer */
     .wrap{
       max-width: 1100px;
       margin: 0 auto;
@@ -110,20 +114,19 @@
       color: var(--txt);
     }
 
-    /* Grid */
+    /* Grid (simple + stable) */
     .grid{
       margin-top: 16px;
       display:grid;
       grid-template-columns: 1.1fr .9fr;
       gap: 14px;
-      align-items: start; /* ✅ stable (no forced stretching) */
+      align-items: start;
     }
     @media (max-width: 920px){
       .grid{ grid-template-columns: 1fr; }
       .brand{ min-width:auto; }
     }
 
-    /* Left column: 2 cards stacked */
     .leftcol{
       display:flex;
       flex-direction:column;
@@ -132,7 +135,7 @@
 
     .card{
       border: 1px solid var(--line);
-      background: rgba(255,255,255,.035);
+      background: var(--card);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       backdrop-filter: blur(10px);
@@ -163,6 +166,12 @@
       color: var(--muted);
     }
     .bullets li{ margin: 6px 0; }
+
+    .sep{
+      height:1px;
+      background: rgba(255,255,255,.10);
+      margin: 12px 0;
+    }
 
     .btnrow{
       display:flex;
@@ -202,12 +211,6 @@
       margin-top: 10px;
     }
 
-    .sep{
-      height:1px;
-      background: rgba(255,255,255,.10);
-      margin: 12px 0;
-    }
-
     /* Video card */
     .videoCard{ padding: 14px 16px 16px; }
     .videoCenter{
@@ -233,20 +236,17 @@
       display:block;
     }
 
-    /* ✅ Showcase card: fixed/clamped height so it can NEVER “explode” */
+    /* ====== FACEBOOK-STORY STYLE SHOWCASE (stable height) ====== */
     .showcaseCard{
+      padding: 14px 16px 16px;
+      height: 280px;          /* ✅ FIX: cannot “explode” */
+      overflow: hidden;
       display:flex;
       flex-direction:column;
       gap:10px;
-      overflow:hidden;
-
-      /* desktop: feels like it reaches near the right card bottom without breaking layout */
-      height: clamp(240px, 34vh, 360px);
     }
     @media (max-width: 920px){
-      .showcaseCard{
-        height: clamp(220px, 32vh, 320px);
-      }
+      .showcaseCard{ height: 260px; }
     }
 
     .showcaseHint{
@@ -256,64 +256,65 @@
       line-height: 1.35;
     }
 
-    /* ✅ The actual scroll area (user controlled) */
-    .carousel{
-      flex: 1;                 /* fill remaining space inside the card */
-      min-height: 140px;
-      height: 100%;
-
-      display:flex;
-      align-items:center;
-      gap: 16px;
-      padding: 16px;
-
+    .storyWrap{
+      position: relative;
+      flex: 1;               /* fills remaining height inside card */
+      min-height: 0;
       border-radius: 14px;
       border: 1px solid rgba(255,255,255,.10);
       background: rgba(0,0,0,.18);
+      overflow: hidden;      /* keeps arrows inside */
+    }
+
+    /* the actual horizontal scroller */
+    .storyScroller{
+      height: 100%;
+      display:flex;
+      align-items:center;
+      gap: 14px;
+      padding: 14px;
 
       overflow-x: auto;
       overflow-y: hidden;
-      white-space: nowrap;     /* ✅ never wrap */
-      flex-wrap: nowrap;       /* ✅ never wrap */
+      white-space: nowrap;
+      flex-wrap: nowrap;
 
-      -webkit-overflow-scrolling: touch;
       scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
 
+      /* ✅ allow horizontal swipe */
+      touch-action: pan-x pinch-zoom;
+
+      /* hide selection */
+      user-select:none;
       cursor: grab;
 
-      /* IMPORTANT: allow vertical page scroll, but keep horizontal drag working */
-      touch-action: pan-y;
-      user-select: none;
+      /* Optional: scrollbar not huge, but visible */
+      scrollbar-width: thin;                 /* Firefox */
+      scrollbar-color: rgba(255,255,255,.18) transparent;
     }
-    .carousel.dragging{
-      cursor: grabbing;
-    }
+    .storyScroller:active{ cursor: grabbing; }
 
-    /* scrollbar visible (so user sees it’s scrollable) */
-    .carousel::-webkit-scrollbar{ height: 10px; }
-    .carousel::-webkit-scrollbar-thumb{
-      background: rgba(255,255,255,.14);
+    .storyScroller::-webkit-scrollbar{ height: 10px; }
+    .storyScroller::-webkit-scrollbar-thumb{
+      background: rgba(255,255,255,.16);
       border-radius: 999px;
       border: 2px solid rgba(0,0,0,.10);
     }
-    .carousel::-webkit-scrollbar-track{ background: transparent; }
+    .storyScroller::-webkit-scrollbar-track{ background: transparent; }
 
     .egg{
       scroll-snap-align: start;
       flex: 0 0 auto;
-
       width: 96px;
       height: 96px;
-
       display:grid;
       place-items:center;
-
       border-radius: 18px;
       border: 1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.03);
       box-shadow: 0 10px 30px rgba(0,0,0,.35);
     }
-
     .egg img{
       width: 82px;
       height: 82px;
@@ -321,9 +322,57 @@
       display:block;
       filter: drop-shadow(0 10px 18px rgba(0,0,0,.35));
 
-      pointer-events: none;  /* ✅ crucial for drag */
-      -webkit-user-drag: none;
-      user-select: none;
+      pointer-events:none;
+      -webkit-user-drag:none;
+      user-select:none;
+    }
+
+    /* Desktop arrows (like browser Facebook stories) */
+    .storyBtn{
+      position:absolute;
+      top:50%;
+      transform: translateY(-50%);
+      z-index: 5;
+
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+
+      display:none;                 /* shown only on desktop */
+      place-items:center;
+
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(0,0,0,.55);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 14px 40px rgba(0,0,0,.55);
+
+      cursor:pointer;
+      user-select:none;
+    }
+    .storyBtn:hover{ background: rgba(0,0,0,.68); }
+
+    .storyBtn.left{ left: 10px; }
+    .storyBtn.right{ right: 10px; }
+
+    @media (min-width: 921px){
+      .storyBtn{ display:grid; }
+      /* add a tiny fade so arrows feel natural */
+      .fadeEdge{
+        position:absolute;
+        top:0; bottom:0;
+        width: 54px;
+        pointer-events:none;
+        z-index: 3;
+      }
+      .fadeEdge.left{
+        left:0;
+        background: linear-gradient(90deg, rgba(0,0,0,.55), transparent);
+      }
+      .fadeEdge.right{
+        right:0;
+        background: linear-gradient(270deg, rgba(0,0,0,.55), transparent);
+      }
     }
 
     .footer{
@@ -333,7 +382,7 @@
       text-align:center;
     }
 
-    /* Floating "Top" button */
+    /* Floating "Top" button (same style as index) */
     .home-fab{
       position: fixed;
       right: 16px;
@@ -415,22 +464,32 @@
           </div>
         </div>
 
-        <!-- ✅ Egg showcase -->
+        <!-- ✅ Story-style showcase -->
         <div class="card showcaseCard">
           <h2><span class="grad">Egg icon showcase</span></h2>
-          <p class="showcaseHint">Swipe on mobile / drag with mouse on PC.</p>
+          <p class="showcaseHint">Swipe on mobile • Use arrows on desktop</p>
 
-          <div class="carousel" id="eggCarousel" aria-label="Egg icon carousel">
-            <div class="egg"><img src="eggs_images/egg_01.png" alt="Egg icon 1"></div>
-            <div class="egg"><img src="eggs_images/egg_02.png" alt="Egg icon 2"></div>
-            <div class="egg"><img src="eggs_images/egg_03.png" alt="Egg icon 3"></div>
-            <div class="egg"><img src="eggs_images/egg_04.png" alt="Egg icon 4"></div>
-            <div class="egg"><img src="eggs_images/egg_05.png" alt="Egg icon 5"></div>
-            <div class="egg"><img src="eggs_images/egg_06.png" alt="Egg icon 6"></div>
-            <div class="egg"><img src="eggs_images/egg_07.png" alt="Egg icon 7"></div>
-            <div class="egg"><img src="eggs_images/egg_08.png" alt="Egg icon 8"></div>
-            <div class="egg"><img src="eggs_images/egg_09.png" alt="Egg icon 9"></div>
-            <div class="egg"><img src="eggs_images/egg_10.png" alt="Egg icon 10"></div>
+          <div class="storyWrap">
+            <!-- desktop fades -->
+            <div class="fadeEdge left"></div>
+            <div class="fadeEdge right"></div>
+
+            <!-- desktop buttons -->
+            <button class="storyBtn left" type="button" aria-label="Scroll left" id="btnLeft">‹</button>
+            <button class="storyBtn right" type="button" aria-label="Scroll right" id="btnRight">›</button>
+
+            <div class="storyScroller" id="storyScroller" aria-label="Egg icon scroller">
+              <div class="egg"><img src="eggs_images/egg_01.png" alt="Egg icon 1"></div>
+              <div class="egg"><img src="eggs_images/egg_02.png" alt="Egg icon 2"></div>
+              <div class="egg"><img src="eggs_images/egg_03.png" alt="Egg icon 3"></div>
+              <div class="egg"><img src="eggs_images/egg_04.png" alt="Egg icon 4"></div>
+              <div class="egg"><img src="eggs_images/egg_05.png" alt="Egg icon 5"></div>
+              <div class="egg"><img src="eggs_images/egg_06.png" alt="Egg icon 6"></div>
+              <div class="egg"><img src="eggs_images/egg_07.png" alt="Egg icon 7"></div>
+              <div class="egg"><img src="eggs_images/egg_08.png" alt="Egg icon 8"></div>
+              <div class="egg"><img src="eggs_images/egg_09.png" alt="Egg icon 9"></div>
+              <div class="egg"><img src="eggs_images/egg_10.png" alt="Egg icon 10"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -470,38 +529,26 @@
     // footer year
     document.getElementById("y").textContent = new Date().getFullYear();
 
-    // ✅ Drag-to-scroll (mouse + touch + pen) using Pointer Events
+    // Desktop arrows (Facebook-story style)
     (function(){
-      const el = document.getElementById("eggCarousel");
-      if(!el) return;
+      const scroller = document.getElementById("storyScroller");
+      const left = document.getElementById("btnLeft");
+      const right = document.getElementById("btnRight");
+      if(!scroller || !left || !right) return;
 
-      let isDown = false;
-      let startX = 0;
-      let scrollLeft = 0;
+      function step(){
+        // scroll by ~3 items (responsive)
+        const first = scroller.querySelector(".egg");
+        const itemW = first ? first.getBoundingClientRect().width : 96;
+        return Math.round(itemW * 3.2);
+      }
 
-      el.addEventListener("pointerdown", (e) => {
-        isDown = true;
-        el.classList.add("dragging");
-        el.setPointerCapture(e.pointerId);
-        startX = e.clientX;
-        scrollLeft = el.scrollLeft;
+      left.addEventListener("click", () => {
+        scroller.scrollBy({ left: -step(), behavior: "smooth" });
       });
-
-      el.addEventListener("pointermove", (e) => {
-        if(!isDown) return;
-        e.preventDefault();
-        const dx = e.clientX - startX;
-        el.scrollLeft = scrollLeft - dx;
+      right.addEventListener("click", () => {
+        scroller.scrollBy({ left: step(), behavior: "smooth" });
       });
-
-      const end = () => {
-        isDown = false;
-        el.classList.remove("dragging");
-      };
-
-      el.addEventListener("pointerup", end);
-      el.addEventListener("pointercancel", end);
-      el.addEventListener("pointerleave", end);
     })();
   </script>
 </body>
