@@ -13,7 +13,6 @@
     :root{
       --bg0:#07070b;
       --bg1:#0b0b13;
-      --card: rgba(255,255,255,.035);
       --line: rgba(255,255,255,.10);
       --txt:#e9e9f3;
       --muted: rgba(233,233,243,.70);
@@ -45,12 +44,11 @@
     }
 
     a{ color:inherit; text-decoration:none; }
-    a:hover{ text-decoration:none; }
 
     .wrap{
       max-width: 1100px;
       margin: 0 auto;
-      padding: 22px 16px 110px; /* extra bottom padding for floating button */
+      padding: 22px 16px 110px;
     }
 
     /* Top bar */
@@ -117,7 +115,7 @@
       display:grid;
       grid-template-columns: 1.1fr .9fr;
       gap: 14px;
-      align-items: start;
+      align-items: start; /* IMPORTANT: no stretch */
     }
     @media (max-width: 920px){
       .grid{ grid-template-columns: 1fr; }
@@ -128,6 +126,7 @@
       display:flex;
       flex-direction:column;
       gap:14px;
+      align-self: start;
     }
 
     .card{
@@ -138,6 +137,11 @@
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       padding: 16px;
+
+      /* HARD FIX: never grow tall unexpectedly */
+      height: auto;
+      min-height: 0;
+      align-self: stretch;
     }
 
     /* Title gradient */
@@ -156,10 +160,7 @@
       font-weight: 800;
     }
 
-    .desc{
-      color: var(--muted);
-      margin: 0;
-    }
+    .desc{ color: var(--muted); margin: 0; }
 
     .bullets{
       margin: 12px 0 0;
@@ -213,14 +214,12 @@
     }
 
     /* Video card */
-    .videoCard{
-      padding: 14px 16px 16px;
-    }
+    .videoCard{ padding: 14px 16px 16px; }
     .videoCenter{
       display:flex;
       flex-direction:column;
       align-items:center;
-      justify-content:center;
+      justify-content:flex-start;
       gap: 12px;
       padding-top: 2px;
     }
@@ -246,6 +245,11 @@
 
     .showcaseCard{
       padding: 14px 16px 16px;
+
+      /* HARD FIX: force normal flow */
+      display:block;
+      height:auto;
+      min-height: 0;
     }
 
     .showcaseHint{
@@ -255,33 +259,34 @@
       line-height: 1.35;
     }
 
-    /* IMPORTANT:
-       This creates a smaller “window” instead of full width.
-       On mobile it’s still not edge-to-edge, so it feels like a story rail. */
+    /* Smaller window, centered */
     .storyWindow{
-      width: min(560px, calc(100% - 24px));
+      width: min(520px, calc(100% - 12px)); /* smaller than before */
       margin: 0 auto;
     }
 
     /* Fixed height so it can NEVER stretch the page */
     .storyWrap{
       position: relative;
-      height: 120px;
+      height: 118px;
       border-radius: 14px;
       border: 1px solid rgba(255,255,255,.10);
       background: rgba(0,0,0,.18);
       overflow: hidden;
+
+      /* HARD FIX */
+      display:block;
+      min-height: 0;
     }
 
-    /* the actual scroll container */
+    /* Scroll container */
     .storyScroller{
       height: 100%;
-      overflow: hidden; /* hide native scrollbars completely */
+      overflow: hidden;
       position: relative;
-      touch-action: none; /* we handle drag ourselves */
+      touch-action: pan-y; /* allow vertical page scroll outside, but drag works via pointer */
     }
 
-    /* inner track that is wider than the window (we move via scrollLeft) */
     .storyTrack{
       height: 100%;
       display:flex;
@@ -290,7 +295,6 @@
       gap: 10px;
       padding: 10px;
       width: max-content;
-      will-change: transform;
       user-select: none;
     }
 
@@ -317,7 +321,6 @@
       user-select: none;
     }
 
-    /* Fades on edges (nice story vibe) */
     .fadeEdge{
       position:absolute;
       top:0; bottom:0;
@@ -410,7 +413,6 @@
   <div id="top"></div>
 
   <div class="wrap">
-    <!-- Topbar -->
     <header class="topbar">
       <div class="brand">
         <img src="pomyx_logo.png" alt="Pomyx logo">
@@ -427,7 +429,6 @@
       </nav>
     </header>
 
-    <!-- Main grid -->
     <section class="grid">
       <!-- LEFT -->
       <div class="leftcol">
@@ -485,7 +486,6 @@
 
               <div class="storyScroller" id="storyScroller">
                 <div class="storyTrack" id="storyTrack">
-                  <!-- ORIGINAL 10 -->
                   <div class="egg"><img src="eggs_images/egg_01.png" alt="Egg icon 1"></div>
                   <div class="egg"><img src="eggs_images/egg_02.png" alt="Egg icon 2"></div>
                   <div class="egg"><img src="eggs_images/egg_03.png" alt="Egg icon 3"></div>
@@ -531,16 +531,11 @@
     </div>
   </div>
 
-  <!-- Floating button: goes to TOP of this page -->
   <a class="home-fab" href="#top" aria-label="Back to top">Back to Top</a>
 
   <script>
-    // footer year
     document.getElementById("y").textContent = new Date().getFullYear();
 
-    // =========================
-    // Infinite loop story rail
-    // =========================
     (function(){
       const scroller = document.getElementById("storyScroller");
       const track = document.getElementById("storyTrack");
@@ -548,21 +543,17 @@
       const btnRight = document.getElementById("btnRight");
       if(!scroller || !track) return;
 
-      // Duplicate the 10 eggs twice => 30 total (orig + clone + clone)
       const originalHTML = track.innerHTML;
       track.innerHTML = originalHTML + originalHTML + originalHTML;
 
       let oneSetWidth = 0;
 
       function measure(){
-        // width of one original set = totalWidth / 3 (because we duplicated to 3 sets)
         const total = track.scrollWidth;
         oneSetWidth = Math.floor(total / 3);
-        // Start in the middle set so we can scroll both directions infinitely
         scroller.scrollLeft = oneSetWidth;
       }
 
-      // Wait images to load for accurate width
       const imgs = track.querySelectorAll("img");
       let loaded = 0;
       imgs.forEach(img => {
@@ -570,43 +561,24 @@
         img.addEventListener("load", () => { loaded++; if(loaded === imgs.length) measure(); }, { once:true });
         img.addEventListener("error", () => { loaded++; if(loaded === imgs.length) measure(); }, { once:true });
       });
-
-      // Fallback if many are already cached
       setTimeout(measure, 300);
 
-      // Keep it looping
       function normalize(){
         if(!oneSetWidth) return;
-        // If we go too far left, jump forward
         if(scroller.scrollLeft <= oneSetWidth * 0.25){
           scroller.scrollLeft += oneSetWidth;
-        }
-        // If we go too far right, jump back
-        else if(scroller.scrollLeft >= oneSetWidth * 1.75){
+        } else if(scroller.scrollLeft >= oneSetWidth * 1.75){
           scroller.scrollLeft -= oneSetWidth;
         }
       }
 
-      scroller.addEventListener("scroll", () => {
-        // normalize during scroll (lightweight)
-        normalize();
-      }, { passive:true });
+      scroller.addEventListener("scroll", () => normalize(), { passive:true });
 
-      // Desktop buttons
-      function step(){
-        // ~4 tiles per click
-        return 72 * 4;
-      }
-      if(btnLeft) btnLeft.addEventListener("click", () => {
-        scroller.scrollLeft -= step();
-        normalize();
-      });
-      if(btnRight) btnRight.addEventListener("click", () => {
-        scroller.scrollLeft += step();
-        normalize();
-      });
+      function step(){ return 72 * 4; }
+      if(btnLeft) btnLeft.addEventListener("click", () => { scroller.scrollLeft -= step(); normalize(); });
+      if(btnRight) btnRight.addEventListener("click", () => { scroller.scrollLeft += step(); normalize(); });
 
-      // Drag / swipe (pointer events) — so the page won't move on mobile
+      // Drag / swipe
       let isDown = false;
       let startX = 0;
       let startScrollLeft = 0;
@@ -630,15 +602,12 @@
         isDown = false;
         try { scroller.releasePointerCapture(e.pointerId); } catch(_) {}
       });
-
       scroller.addEventListener("pointercancel", (e) => {
         isDown = false;
         try { scroller.releasePointerCapture(e.pointerId); } catch(_) {}
       });
 
-      // Re-measure on resize
       window.addEventListener("resize", () => {
-        // keep current relative position in middle set after resize
         const rel = oneSetWidth ? (scroller.scrollLeft % oneSetWidth) : 0;
         measure();
         scroller.scrollLeft = oneSetWidth + rel;
