@@ -48,7 +48,7 @@
     .wrap{
       max-width: 1100px;
       margin: 0 auto;
-      padding: 22px 16px 110px;
+      padding: 18px 16px 96px; /* slightly tighter */
     }
 
     /* Top bar */
@@ -64,6 +64,7 @@
       box-shadow: var(--shadow);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
+      flex-wrap: wrap; /* HARD FIX: prevents layout break on narrower widths */
     }
 
     .brand{
@@ -77,11 +78,13 @@
       border-radius: 12px;
       border:1px solid rgba(255,255,255,.18);
       background: rgba(255,255,255,.04);
+      flex: 0 0 auto;
     }
     .brand .title{
       display:flex;
       flex-direction:column;
       line-height:1.1;
+      min-width: 0;
     }
     .brand .title b{ font-size: 14px; letter-spacing:.2px; }
     .brand .title span{ font-size: 12px; color: var(--muted); }
@@ -127,6 +130,7 @@
       flex-direction:column;
       gap:14px;
       align-self: start;
+      min-width: 0;
     }
 
     .card{
@@ -136,13 +140,18 @@
       box-shadow: var(--shadow);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
-      padding: 16px;
 
-      /* HARD FIX: never grow tall unexpectedly */
+      /* slightly smaller padding so cards don't feel "too big" */
+      padding: 14px;
+
+      /* HARD FIX: grid item (right video card) must NOT stretch height */
       height: auto;
       min-height: 0;
-      align-self: stretch;
+      align-self: start;
+      min-width: 0;
     }
+    /* Left column cards should fill column width nicely */
+    .leftcol .card{ align-self: stretch; }
 
     /* Title gradient */
     .grad{
@@ -214,7 +223,7 @@
     }
 
     /* Video card */
-    .videoCard{ padding: 14px 16px 16px; }
+    .videoCard{ padding: 14px; }
     .videoCenter{
       display:flex;
       flex-direction:column;
@@ -230,7 +239,8 @@
       border: 1px solid rgba(255,255,255,.10);
       background: rgba(0,0,0,.25);
       aspect-ratio: 9 / 16;
-      width: min(320px, 100%);
+      width: 100%;
+      max-width: 320px;
     }
     .video iframe{
       width:100%;
@@ -244,9 +254,7 @@
        =========================== */
 
     .showcaseCard{
-      padding: 14px 16px 16px;
-
-      /* HARD FIX: force normal flow */
+      padding: 14px;
       display:block;
       height:auto;
       min-height: 0;
@@ -261,7 +269,7 @@
 
     /* Smaller window, centered */
     .storyWindow{
-      width: min(520px, calc(100% - 12px)); /* smaller than before */
+      width: min(520px, calc(100% - 12px));
       margin: 0 auto;
     }
 
@@ -273,8 +281,6 @@
       border: 1px solid rgba(255,255,255,.10);
       background: rgba(0,0,0,.18);
       overflow: hidden;
-
-      /* HARD FIX */
       display:block;
       min-height: 0;
     }
@@ -284,14 +290,14 @@
       height: 100%;
       overflow: hidden;
       position: relative;
-      touch-action: pan-y; /* allow vertical page scroll outside, but drag works via pointer */
+      touch-action: pan-y;
     }
 
     .storyTrack{
       height: 100%;
       display:flex;
       align-items:center;
-      justify-content:flex-start; /* never spread items */
+      justify-content:flex-start;
       gap: 10px;
       padding: 10px;
       width: max-content;
