@@ -239,6 +239,35 @@
       font-size: 12px;
       text-align:center;
     }
+    /* Floating Home button */
+.floating-home{
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 999;
+
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.06);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  box-shadow: 0 10px 30px rgba(0,0,0,.45);
+  color: var(--txt);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .2px;
+
+  transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
+}
+
+.floating-home:hover{
+  transform: translateY(-2px);
+  background: rgba(255,255,255,.10);
+  box-shadow: 0 14px 40px rgba(0,0,0,.6);
+}
+
   </style>
 </head>
 
@@ -330,5 +359,7 @@
   <script>
     document.getElementById("y").textContent = new Date().getFullYear();
   </script>
+    <!-- Floating Home button -->
+  <a href="index.html" class="floating-home">⬅ Home</a>
 </body>
 </html>
