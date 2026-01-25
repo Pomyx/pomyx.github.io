@@ -22,10 +22,10 @@
       --radius: 18px;
 
       /* Easter-ish pastel accents */
-      --a1:#ffd6e7;  /* pink */
-      --a2:#d7f7ff;  /* light cyan */
-      --a3:#fff1c7;  /* warm yellow */
-      --a4:#d9ffd8;  /* mint */
+      --a1:#ff7cc8;  /* stronger pink */
+      --a2:#5fe0ff;  /* stronger cyan */
+      --a3:#ffd36a;  /* stronger warm yellow */
+      --a4:#7dff9a;  /* stronger mint */
     }
 
     *{ box-sizing:border-box; }
@@ -35,9 +35,9 @@
       color:var(--txt);
       font: 15px/1.55 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
       background:
-        radial-gradient(1200px 700px at 20% -10%, rgba(255,214,231,.10), transparent 55%),
-        radial-gradient(1200px 700px at 90% 10%, rgba(215,247,255,.09), transparent 55%),
-        radial-gradient(1000px 700px at 60% 110%, rgba(255,241,199,.07), transparent 55%),
+        radial-gradient(1200px 700px at 20% -10%, rgba(255,124,200,.10), transparent 55%),
+        radial-gradient(1200px 700px at 90% 10%, rgba(95,224,255,.08), transparent 55%),
+        radial-gradient(1000px 700px at 60% 110%, rgba(255,211,106,.06), transparent 55%),
         linear-gradient(180deg, var(--bg0), var(--bg1));
       overflow-x:hidden;
     }
@@ -109,40 +109,13 @@
       color: var(--txt);
     }
 
-    /* Hero */
-    .hero{
-      margin-top: 18px;
-      padding: 18px 16px;
-      border-radius: var(--radius);
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.03);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-    }
-    .hero h1{
-      margin: 0 0 8px 0;
-      font-size: 22px;
-      letter-spacing: .2px;
-    }
-    .grad{
-      background: linear-gradient(90deg, var(--a1), var(--a2), var(--a3));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-    .hero p{
-      margin: 0;
-      color: var(--muted);
-      max-width: 80ch;
-    }
-
     /* Grid */
     .grid{
       margin-top: 16px;
       display:grid;
       grid-template-columns: 1.1fr .9fr;
       gap: 14px;
+      align-items: start;
     }
     @media (max-width: 920px){
       .grid{ grid-template-columns: 1fr; }
@@ -159,10 +132,20 @@
       padding: 16px;
     }
 
+    /* Title gradient – stronger + more “pop” */
+    .grad{
+      background: linear-gradient(90deg, var(--a1), var(--a2), var(--a3), var(--a4));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: saturate(1.25) contrast(1.05);
+    }
+
     .card h2{
       margin: 0 0 10px 0;
-      font-size: 16px;
+      font-size: 18px;
       letter-spacing: .2px;
+      font-weight: 800;
     }
 
     .desc{
@@ -205,8 +188,8 @@
     }
 
     .btn.primary{
-      border-color: rgba(255,214,231,.35);
-      background: linear-gradient(180deg, rgba(255,214,231,.14), rgba(255,255,255,.04));
+      border-color: rgba(255,124,200,.35);
+      background: linear-gradient(180deg, rgba(255,124,200,.14), rgba(255,255,255,.04));
     }
 
     .small{
@@ -215,14 +198,33 @@
       margin-top: 10px;
     }
 
-    /* Video embed */
+    .sep{
+      height:1px;
+      background: rgba(255,255,255,.10);
+      margin: 12px 0;
+    }
+
+    /* Video card compact + centered content */
+    .videoCard{
+      padding: 14px 16px 16px;
+    }
+    .videoCenter{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap: 12px;
+      padding-top: 2px;
+    }
+
+    /* Slightly smaller embed area */
     .video{
       border-radius: 14px;
       overflow:hidden;
       border: 1px solid rgba(255,255,255,.10);
       background: rgba(0,0,0,.25);
       aspect-ratio: 9 / 16;
-      max-height: 540px;
+      width: min(320px, 100%);
     }
     .video iframe{
       width:100%;
@@ -236,11 +238,6 @@
       color: rgba(233,233,243,.55);
       font-size: 12px;
       text-align:center;
-    }
-    .sep{
-      height:1px;
-      background: rgba(255,255,255,.10);
-      margin: 12px 0;
     }
   </style>
 </head>
@@ -259,29 +256,20 @@
 
       <nav class="nav">
         <a class="pill" href="index.html">Home</a>
-        <a class="pill" href="https://play.google.com/store/apps/details?id=com.pomyx.iconpack.easter" target="_blank" rel="noopener">Play</a>
-        <a class="pill" href="https://play.google.com/apps/testing/com.pomyx.iconpack.easter" target="_blank" rel="noopener">Join Test</a>
         <a class="pill" href="https://youtube.com/shorts/i16OniDatKk?si=O7fWHRR7xqAnvFGQ" target="_blank" rel="noopener">Video</a>
+        <a class="pill" href="privacy_policy.html">Privacy Policy</a>
       </nav>
     </header>
-
-    <!-- Hero -->
-    <section class="hero">
-      <h1><span class="grad">Pomyx Easter Icon Pack</span></h1>
-      <p>
-        A warm, spring-themed Android icon pack with pastel vibes, clean shapes, and a hand-made “Pomyx” style.
-        Built for a cozy Easter home screen — simple, unique, and readable on both light and dark wallpapers.
-      </p>
-    </section>
 
     <!-- Main grid -->
     <section class="grid">
       <!-- Left: description + test links -->
       <div class="card">
-        <h2><span class="grad">About this pack</span></h2>
+        <h2><span class="grad">Pomyx Easter Icon Pack</span></h2>
+
         <p class="desc">
-          This is my Easter-themed pack: soft pastel colors, smooth gradients, and custom egg-style icons.
-          The goal is a playful look that still feels clean and premium on modern Android launchers.
+          A warm, spring-themed Android icon pack with pastel vibes, clean shapes, and a hand-made “Pomyx” style.
+          Built for a cozy Easter home screen — simple, unique, and readable on both light and dark wallpapers.
         </p>
 
         <ul class="bullets">
@@ -311,28 +299,25 @@
         </div>
       </div>
 
-      <!-- Right: video card (like QR-card slot) -->
-      <div class="card">
+      <!-- Right: video card -->
+      <div class="card videoCard">
         <h2><span class="grad">Short demo video</span></h2>
 
-        <!-- YouTube Shorts embed (privacy-enhanced domain) -->
-        <div class="video" title="Pomyx Easter Icon Pack demo">
-          <iframe
-            src="https://www.youtube-nocookie.com/embed/i16OniDatKk"
-            title="Pomyx Easter Icon Pack demo"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen>
-          </iframe>
-        </div>
+        <div class="videoCenter">
+          <div class="video" title="Pomyx Easter Icon Pack demo">
+            <iframe
+              src="https://www.youtube-nocookie.com/embed/i16OniDatKk"
+              title="Pomyx Easter Icon Pack demo"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen>
+            </iframe>
+          </div>
 
-        <div class="btnrow">
-          <a class="btn primary" href="https://youtube.com/shorts/i16OniDatKk?si=O7fWHRR7xqAnvFGQ" target="_blank" rel="noopener">
-            Watch on YouTube
-          </a>
-        </div>
-
-        <div class="small">
-          If the embed acts weird on mobile, the “Watch on YouTube” button is the safe option.
+          <div class="btnrow" style="margin-top:0;">
+            <a class="btn primary" href="https://youtube.com/shorts/i16OniDatKk?si=O7fWHRR7xqAnvFGQ" target="_blank" rel="noopener">
+              Watch on YouTube
+            </a>
+          </div>
         </div>
       </div>
     </section>
