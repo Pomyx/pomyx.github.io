@@ -21,11 +21,11 @@
       --shadow: 0 16px 60px rgba(0,0,0,.55);
       --radius: 18px;
 
-      /* Easter-ish accents */
-      --a1:#ff7cc8;
-      --a2:#5fe0ff;
-      --a3:#ffd36a;
-      --a4:#7dff9a;
+      /* Easter-ish pastel accents */
+      --a1:#ff7cc8;  /* stronger pink */
+      --a2:#5fe0ff;  /* stronger cyan */
+      --a3:#ffd36a;  /* stronger warm yellow */
+      --a4:#7dff9a;  /* stronger mint */
     }
 
     *{ box-sizing:border-box; }
@@ -118,20 +118,21 @@
       display:grid;
       grid-template-columns: 1.1fr .9fr;
       gap: 14px;
-      align-items: stretch; /* ✅ important for equal-height columns */
+      align-items: stretch; /* ✅ stable columns */
     }
+
     @media (max-width: 920px){
       .grid{ grid-template-columns: 1fr; }
       .brand{ min-width:auto; }
     }
 
-    /* Columns (so left can have 2 cards and fill height to match right) */
     .col{
       display:flex;
       flex-direction:column;
       gap:14px;
-      min-height: 0;
+      min-height:0;
     }
+
     .col.fill{ height:100%; }
 
     .card{
@@ -144,7 +145,7 @@
       padding: 16px;
     }
 
-    /* Title gradient */
+    /* Title gradient – stronger + more “pop” */
     .grad{
       background: linear-gradient(90deg, var(--a1), var(--a2), var(--a3), var(--a4));
       -webkit-background-clip: text;
@@ -160,7 +161,10 @@
       font-weight: 800;
     }
 
-    .desc{ color: var(--muted); margin: 0; }
+    .desc{
+      color: var(--muted);
+      margin: 0;
+    }
 
     .bullets{
       margin: 12px 0 0;
@@ -213,8 +217,10 @@
       margin: 12px 0;
     }
 
-    /* Video card */
-    .videoCard{ padding: 14px 16px 16px; }
+    /* Video card compact + centered content */
+    .videoCard{
+      padding: 14px 16px 16px;
+    }
     .videoCenter{
       display:flex;
       flex-direction:column;
@@ -223,6 +229,8 @@
       gap: 12px;
       padding-top: 2px;
     }
+
+    /* Slightly smaller embed area */
     .video{
       border-radius: 14px;
       overflow:hidden;
@@ -231,17 +239,26 @@
       aspect-ratio: 9 / 16;
       width: min(320px, 100%);
     }
-    .video iframe{ width:100%; height:100%; border:0; display:block; }
+    .video iframe{
+      width:100%;
+      height:100%;
+      border:0;
+      display:block;
+    }
 
-    /* ✅ Icon showcase card fills remaining height on left */
+    /* ✅ Showcase card: fills remaining height on desktop, safe on mobile */
     .showcaseCard{
-      flex: 1;              /* ✅ fills the leftover height */
-      min-height: 180px;
+      flex: 1;
+      min-height: 170px;
       display:flex;
       flex-direction:column;
-      gap: 10px;
+      gap:10px;
       overflow:hidden;
     }
+    @media (max-width: 920px){
+      .showcaseCard{ flex: unset; } /* ✅ prevents mobile layout breaking */
+    }
+
     .showcaseHint{
       color: var(--muted);
       font-size: 12px;
@@ -249,60 +266,53 @@
       line-height: 1.35;
     }
 
-    /* Infinite loop marquee */
-    .marquee{
-      position: relative;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.18);
-      overflow: hidden;
+    /* ✅ Manual horizontal carousel (user controls speed) */
+    .carousel{
       flex: 1;
       min-height: 140px;
       display:flex;
       align-items:center;
+      gap: 16px;
+
+      padding: 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
     }
 
-    .marqueeTrack{
-      display:flex;
-      align-items:center;
-      gap: 18px;
-      width: max-content;
-      padding: 18px;
-      animation: scrollX 22s linear infinite;
-      will-change: transform;
+    .carousel::-webkit-scrollbar{ height: 8px; }
+    .carousel::-webkit-scrollbar-thumb{
+      background: rgba(255,255,255,.12);
+      border-radius: 999px;
     }
-
-    .marquee:hover .marqueeTrack{
-      animation-play-state: paused; /* pause on hover */
-    }
-
-    @keyframes scrollX{
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-50%); } /* ✅ because we duplicate the set */
-    }
+    .carousel::-webkit-scrollbar-track{ background: transparent; }
 
     .egg{
-      width: 84px;
-      height: 84px;
+      scroll-snap-align: start;
       flex: 0 0 auto;
+
+      width: 92px;
+      height: 92px;
+
       display:grid;
       place-items:center;
+
       border-radius: 18px;
       border: 1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.03);
       box-shadow: 0 10px 30px rgba(0,0,0,.35);
     }
     .egg img{
-      width: 72px;
-      height: 72px;
+      width: 78px;
+      height: 78px;
       object-fit: contain;
       display:block;
       filter: drop-shadow(0 10px 18px rgba(0,0,0,.35));
-    }
-
-    /* Reduced motion */
-    @media (prefers-reduced-motion: reduce){
-      .marqueeTrack{ animation: none; }
     }
 
     .footer{
@@ -312,7 +322,7 @@
       text-align:center;
     }
 
-    /* Floating "Top" button (same style as index, but goes to top of this page) */
+    /* Floating "Top" button (same style as index) */
     .home-fab{
       position: fixed;
       right: 16px;
@@ -359,9 +369,9 @@
 
     <!-- Main grid -->
     <section class="grid">
-      <!-- LEFT column (2 cards) -->
+      <!-- LEFT column -->
       <div class="col fill">
-        <!-- Top: description + test links -->
+        <!-- Description + test links -->
         <div class="card">
           <h2><span class="grad">Pomyx Easter Icon Pack</span></h2>
 
@@ -397,38 +407,22 @@
           </div>
         </div>
 
-        <!-- Bottom: icon showcase (fills to match right card height) -->
+        <!-- ✅ Egg showcase (manual scroll) -->
         <div class="card showcaseCard">
           <h2><span class="grad">Egg icon showcase</span></h2>
-          <p class="showcaseHint">A few sample icons (512×512 PNG, transparent). Hover to pause the loop.</p>
+          <p class="showcaseHint">Swipe / drag to scroll (you control the speed).</p>
 
-          <div class="marquee" aria-label="Egg icon carousel">
-            <!-- ✅ Duplicate set for seamless infinite loop -->
-            <div class="marqueeTrack">
-<!-- Set A (10 icons) -->
-<div class="egg"><img src="eggs_images/egg_01.png" alt="Egg icon 1"></div>
-<div class="egg"><img src="eggs_images/egg_02.png" alt="Egg icon 2"></div>
-<div class="egg"><img src="eggs_images/egg_03.png" alt="Egg icon 3"></div>
-<div class="egg"><img src="eggs_images/egg_04.png" alt="Egg icon 4"></div>
-<div class="egg"><img src="eggs_images/egg_05.png" alt="Egg icon 5"></div>
-<div class="egg"><img src="eggs_images/egg_06.png" alt="Egg icon 6"></div>
-<div class="egg"><img src="eggs_images/egg_07.png" alt="Egg icon 7"></div>
-<div class="egg"><img src="eggs_images/egg_08.png" alt="Egg icon 8"></div>
-<div class="egg"><img src="eggs_images/egg_09.png" alt="Egg icon 9"></div>
-<div class="egg"><img src="eggs_images/egg_10.png" alt="Egg icon 10"></div>
-
-<!-- Set B (duplicate for loop) -->
-<div class="egg"><img src="eggs_images/egg_01.png" alt=""></div>
-<div class="egg"><img src="eggs_images/egg_02.png" alt=""></div>
-<div class="egg"><img src="eggs_images/egg_03.png" alt=""></div>
-<div class="egg"><img src="eggs_images/egg_04.png" alt=""></div>
-<div class="egg"><img src="eggs_images/egg_05.png" alt=""></div>
-<div class="egg"><img src="eggs_images/egg_06.png" alt=""></div>
-<div class="egg"><img src="eggs_images/egg_07.png" alt=""></div>
-<div class="egg"><img src="eggs_images/egg_08.png" alt=""></div>
-<div class="egg"><img src="eggs_images/egg_09.png" alt=""></div>
-<div class="egg"><img src="eggs_images/egg_10.png" alt=""></div>
-            </div>
+          <div class="carousel" aria-label="Egg icon carousel">
+            <div class="egg"><img src="eggs_images/egg_01.png" alt="Egg icon 1"></div>
+            <div class="egg"><img src="eggs_images/egg_02.png" alt="Egg icon 2"></div>
+            <div class="egg"><img src="eggs_images/egg_03.png" alt="Egg icon 3"></div>
+            <div class="egg"><img src="eggs_images/egg_04.png" alt="Egg icon 4"></div>
+            <div class="egg"><img src="eggs_images/egg_05.png" alt="Egg icon 5"></div>
+            <div class="egg"><img src="eggs_images/egg_06.png" alt="Egg icon 6"></div>
+            <div class="egg"><img src="eggs_images/egg_07.png" alt="Egg icon 7"></div>
+            <div class="egg"><img src="eggs_images/egg_08.png" alt="Egg icon 8"></div>
+            <div class="egg"><img src="eggs_images/egg_09.png" alt="Egg icon 9"></div>
+            <div class="egg"><img src="eggs_images/egg_10.png" alt="Egg icon 10"></div>
           </div>
         </div>
       </div>
