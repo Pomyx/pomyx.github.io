@@ -21,15 +21,17 @@
       --shadow: 0 16px 60px rgba(0,0,0,.55);
       --radius: 18px;
 
-      /* Easter-ish pastel accents */
-      --a1:#ff7cc8;  /* stronger pink */
-      --a2:#5fe0ff;  /* stronger cyan */
-      --a3:#ffd36a;  /* stronger warm yellow */
-      --a4:#7dff9a;  /* stronger mint */
+      /* Easter-ish accents */
+      --a1:#ff7cc8;
+      --a2:#5fe0ff;
+      --a3:#ffd36a;
+      --a4:#7dff9a;
     }
 
     *{ box-sizing:border-box; }
     html,body{ height:100%; }
+    html{ scroll-behavior:smooth; }
+
     body{
       margin:0;
       color:var(--txt);
@@ -49,7 +51,7 @@
     .wrap{
       max-width: 1100px;
       margin: 0 auto;
-      padding: 22px 16px 110px; /* ✅ was 44px */
+      padding: 22px 16px 110px;
     }
 
     /* Top bar */
@@ -116,12 +118,21 @@
       display:grid;
       grid-template-columns: 1.1fr .9fr;
       gap: 14px;
-      align-items: start;
+      align-items: stretch; /* ✅ important for equal-height columns */
     }
     @media (max-width: 920px){
       .grid{ grid-template-columns: 1fr; }
       .brand{ min-width:auto; }
     }
+
+    /* Columns (so left can have 2 cards and fill height to match right) */
+    .col{
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+      min-height: 0;
+    }
+    .col.fill{ height:100%; }
 
     .card{
       border: 1px solid var(--line);
@@ -133,7 +144,7 @@
       padding: 16px;
     }
 
-    /* Title gradient – stronger + more “pop” */
+    /* Title gradient */
     .grad{
       background: linear-gradient(90deg, var(--a1), var(--a2), var(--a3), var(--a4));
       -webkit-background-clip: text;
@@ -149,10 +160,7 @@
       font-weight: 800;
     }
 
-    .desc{
-      color: var(--muted);
-      margin: 0;
-    }
+    .desc{ color: var(--muted); margin: 0; }
 
     .bullets{
       margin: 12px 0 0;
@@ -205,10 +213,8 @@
       margin: 12px 0;
     }
 
-    /* Video card compact + centered content */
-    .videoCard{
-      padding: 14px 16px 16px;
-    }
+    /* Video card */
+    .videoCard{ padding: 14px 16px 16px; }
     .videoCenter{
       display:flex;
       flex-direction:column;
@@ -217,8 +223,6 @@
       gap: 12px;
       padding-top: 2px;
     }
-
-    /* Slightly smaller embed area */
     .video{
       border-radius: 14px;
       overflow:hidden;
@@ -227,11 +231,78 @@
       aspect-ratio: 9 / 16;
       width: min(320px, 100%);
     }
-    .video iframe{
-      width:100%;
-      height:100%;
-      border:0;
+    .video iframe{ width:100%; height:100%; border:0; display:block; }
+
+    /* ✅ Icon showcase card fills remaining height on left */
+    .showcaseCard{
+      flex: 1;              /* ✅ fills the leftover height */
+      min-height: 180px;
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+      overflow:hidden;
+    }
+    .showcaseHint{
+      color: var(--muted);
+      font-size: 12px;
+      margin: 0;
+      line-height: 1.35;
+    }
+
+    /* Infinite loop marquee */
+    .marquee{
+      position: relative;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      overflow: hidden;
+      flex: 1;
+      min-height: 140px;
+      display:flex;
+      align-items:center;
+    }
+
+    .marqueeTrack{
+      display:flex;
+      align-items:center;
+      gap: 18px;
+      width: max-content;
+      padding: 18px;
+      animation: scrollX 22s linear infinite;
+      will-change: transform;
+    }
+
+    .marquee:hover .marqueeTrack{
+      animation-play-state: paused; /* pause on hover */
+    }
+
+    @keyframes scrollX{
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); } /* ✅ because we duplicate the set */
+    }
+
+    .egg{
+      width: 84px;
+      height: 84px;
+      flex: 0 0 auto;
+      display:grid;
+      place-items:center;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+    .egg img{
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
       display:block;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,.35));
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      .marqueeTrack{ animation: none; }
     }
 
     .footer{
@@ -241,7 +312,7 @@
       text-align:center;
     }
 
-    /* ✅ Use the SAME floating home button as index.html */
+    /* Floating "Top" button (same style as index, but goes to top of this page) */
     .home-fab{
       position: fixed;
       right: 16px;
@@ -266,7 +337,8 @@
 </head>
 
 <body>
-    <div id="top"></div>
+  <div id="top"></div>
+
   <div class="wrap">
     <!-- Topbar -->
     <header class="topbar">
@@ -287,60 +359,100 @@
 
     <!-- Main grid -->
     <section class="grid">
-      <!-- Left: description + test links -->
-      <div class="card">
-        <h2><span class="grad">Pomyx Easter Icon Pack</span></h2>
+      <!-- LEFT column (2 cards) -->
+      <div class="col fill">
+        <!-- Top: description + test links -->
+        <div class="card">
+          <h2><span class="grad">Pomyx Easter Icon Pack</span></h2>
 
-        <p class="desc">
-          A warm, spring-themed Android icon pack with pastel vibes, clean shapes, and a hand-made “Pomyx” style.
-          Built for a cozy Easter home screen — simple, unique, and readable on both light and dark wallpapers.
-        </p>
+          <p class="desc">
+            A warm, spring-themed Android icon pack with pastel vibes, clean shapes, and a hand-made “Pomyx” style.
+            Built for a cozy Easter home screen — simple, unique, and readable on both light and dark wallpapers.
+          </p>
 
-        <ul class="bullets">
-          <li>Pastel spring palette + subtle gradients</li>
-          <li>Unique “egg” icon style (Pomyx signature)</li>
-          <li>Made for modern launchers (Nova / others)</li>
-        </ul>
+          <ul class="bullets">
+            <li>Pastel spring palette + subtle gradients</li>
+            <li>Unique “egg” icon style (Pomyx signature)</li>
+            <li>Made for modern launchers (Nova / others)</li>
+          </ul>
 
-        <div class="sep"></div>
+          <div class="sep"></div>
 
-        <h2><span class="grad">Closed testing</span></h2>
-        <p class="desc">
-          If you’re in my closed test list, you can install it from Play and help me test the release build.
-        </p>
+          <h2><span class="grad">Closed testing</span></h2>
+          <p class="desc">
+            If you’re in my closed test list, you can install it from Play and help me test the release build.
+          </p>
 
-        <div class="btnrow">
-          <a class="btn primary" href="https://play.google.com/apps/testing/com.pomyx.iconpack.easter" target="_blank" rel="noopener">
-            Join closed test
-          </a>
-          <a class="btn" href="https://play.google.com/store/apps/details?id=com.pomyx.iconpack.easter" target="_blank" rel="noopener">
-            Open Play listing
-          </a>
+          <div class="btnrow">
+            <a class="btn primary" href="https://play.google.com/apps/testing/com.pomyx.iconpack.easter" target="_blank" rel="noopener">
+              Join closed test
+            </a>
+            <a class="btn" href="https://play.google.com/store/apps/details?id=com.pomyx.iconpack.easter" target="_blank" rel="noopener">
+              Open Play listing
+            </a>
+          </div>
+
+          <div class="small">
+            Tip: open the “Join closed test” link first, then install from the Play listing.
+          </div>
         </div>
 
-        <div class="small">
-          Tip: open the “Join closed test” link first, then install from the Play listing.
+        <!-- Bottom: icon showcase (fills to match right card height) -->
+        <div class="card showcaseCard">
+          <h2><span class="grad">Egg icon showcase</span></h2>
+          <p class="showcaseHint">A few sample icons (512×512 PNG, transparent). Hover to pause the loop.</p>
+
+          <div class="marquee" aria-label="Egg icon carousel">
+            <!-- ✅ Duplicate set for seamless infinite loop -->
+            <div class="marqueeTrack">
+<!-- Set A (10 icons) -->
+<div class="egg"><img src="eggs_images/egg_01.png" alt="Egg icon 1"></div>
+<div class="egg"><img src="eggs_images/egg_02.png" alt="Egg icon 2"></div>
+<div class="egg"><img src="eggs_images/egg_03.png" alt="Egg icon 3"></div>
+<div class="egg"><img src="eggs_images/egg_04.png" alt="Egg icon 4"></div>
+<div class="egg"><img src="eggs_images/egg_05.png" alt="Egg icon 5"></div>
+<div class="egg"><img src="eggs_images/egg_06.png" alt="Egg icon 6"></div>
+<div class="egg"><img src="eggs_images/egg_07.png" alt="Egg icon 7"></div>
+<div class="egg"><img src="eggs_images/egg_08.png" alt="Egg icon 8"></div>
+<div class="egg"><img src="eggs_images/egg_09.png" alt="Egg icon 9"></div>
+<div class="egg"><img src="eggs_images/egg_10.png" alt="Egg icon 10"></div>
+
+<!-- Set B (duplicate for loop) -->
+<div class="egg"><img src="eggs_images/egg_01.png" alt=""></div>
+<div class="egg"><img src="eggs_images/egg_02.png" alt=""></div>
+<div class="egg"><img src="eggs_images/egg_03.png" alt=""></div>
+<div class="egg"><img src="eggs_images/egg_04.png" alt=""></div>
+<div class="egg"><img src="eggs_images/egg_05.png" alt=""></div>
+<div class="egg"><img src="eggs_images/egg_06.png" alt=""></div>
+<div class="egg"><img src="eggs_images/egg_07.png" alt=""></div>
+<div class="egg"><img src="eggs_images/egg_08.png" alt=""></div>
+<div class="egg"><img src="eggs_images/egg_09.png" alt=""></div>
+<div class="egg"><img src="eggs_images/egg_10.png" alt=""></div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Right: video card -->
-      <div class="card videoCard">
-        <h2><span class="grad">Short demo video</span></h2>
+      <!-- RIGHT column -->
+      <div class="col">
+        <div class="card videoCard">
+          <h2><span class="grad">Short demo video</span></h2>
 
-        <div class="videoCenter">
-          <div class="video" title="Pomyx Easter Icon Pack demo">
-            <iframe
-              src="https://www.youtube-nocookie.com/embed/i16OniDatKk"
-              title="Pomyx Easter Icon Pack demo"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen>
-            </iframe>
-          </div>
+          <div class="videoCenter">
+            <div class="video" title="Pomyx Easter Icon Pack demo">
+              <iframe
+                src="https://www.youtube-nocookie.com/embed/i16OniDatKk"
+                title="Pomyx Easter Icon Pack demo"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen>
+              </iframe>
+            </div>
 
-          <div class="btnrow" style="margin-top:0;">
-            <a class="btn primary" href="https://youtube.com/shorts/i16OniDatKk?si=O7fWHRR7xqAnvFGQ" target="_blank" rel="noopener">
-              Watch on YouTube
-            </a>
+            <div class="btnrow" style="margin-top:0;">
+              <a class="btn primary" href="https://youtube.com/shorts/i16OniDatKk?si=O7fWHRR7xqAnvFGQ" target="_blank" rel="noopener">
+                Watch on YouTube
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -351,8 +463,8 @@
     </div>
   </div>
 
-  <!-- ✅ Floating Home button (same as index.html) -->
-<a class="home-fab" href="#top" aria-label="Back to top">Back to Top</a>
+  <!-- Floating button: goes to TOP of this page -->
+  <a class="home-fab" href="#top" aria-label="Back to top">Top</a>
 
   <script>
     document.getElementById("y").textContent = new Date().getFullYear();
