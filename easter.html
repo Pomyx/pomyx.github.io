@@ -23,7 +23,7 @@
       --shadow: 0 16px 60px rgba(0,0,0,.55);
       --radius: 18px;
 
-      /* Easter-ish accents */
+      /* Easter accents */
       --a1:#ff7cc8;
       --a2:#5fe0ff;
       --a3:#ffd36a;
@@ -49,11 +49,10 @@
     a{ color:inherit; text-decoration:none; }
     a:hover{ text-decoration:none; }
 
-    /* extra bottom padding so floating button never covers footer */
     .wrap{
       max-width: 1100px;
       margin: 0 auto;
-      padding: 22px 16px 110px;
+      padding: 22px 16px 110px; /* room for floating button */
     }
 
     /* Topbar */
@@ -114,7 +113,7 @@
       color: var(--txt);
     }
 
-    /* Grid (simple + stable) */
+    /* Grid */
     .grid{
       margin-top: 16px;
       display:grid;
@@ -199,7 +198,6 @@
       transform: translateY(-1px);
       background: rgba(255,255,255,.07);
     }
-
     .btn.primary{
       border-color: rgba(255,124,200,.35);
       background: linear-gradient(180deg, rgba(255,124,200,.14), rgba(255,255,255,.04));
@@ -236,37 +234,31 @@
       display:block;
     }
 
-    /* ====== FACEBOOK-STORY STYLE SHOWCASE (stable height) ====== */
+    /* ===== Stable story-style egg scroller (NO “exploding” height) ===== */
     .showcaseCard{
       padding: 14px 16px 16px;
-      height: 280px;          /* ✅ FIX: cannot “explode” */
-      overflow: hidden;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
-    @media (max-width: 920px){
-      .showcaseCard{ height: 260px; }
     }
 
     .showcaseHint{
       color: var(--muted);
       font-size: 12px;
-      margin: 0;
+      margin: 0 0 10px 0;
       line-height: 1.35;
     }
 
+    /* Fixed height box so it can never stretch the page */
     .storyWrap{
       position: relative;
-      flex: 1;               /* fills remaining height inside card */
-      min-height: 0;
+      height: 150px;                 /* ✅ FIXED HEIGHT */
       border-radius: 14px;
       border: 1px solid rgba(255,255,255,.10);
       background: rgba(0,0,0,.18);
-      overflow: hidden;      /* keeps arrows inside */
+      overflow: hidden;
+    }
+    @media (max-width: 920px){
+      .storyWrap{ height: 150px; }   /* keep consistent on mobile */
     }
 
-    /* the actual horizontal scroller */
     .storyScroller{
       height: 100%;
       display:flex;
@@ -282,18 +274,17 @@
       scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
 
-      /* ✅ allow horizontal swipe */
-      touch-action: pan-x pinch-zoom;
+      /* ✅ the key: when you drag here, do horizontal, not page scroll */
+      touch-action: pan-x;
+      overscroll-behavior-x: contain;
 
-      /* hide selection */
       user-select:none;
       cursor: grab;
 
-      /* Optional: scrollbar not huge, but visible */
-      scrollbar-width: thin;                 /* Firefox */
+      scrollbar-width: thin;
       scrollbar-color: rgba(255,255,255,.18) transparent;
     }
-    .storyScroller:active{ cursor: grabbing; }
+    .storyScroller.dragging{ cursor: grabbing; }
 
     .storyScroller::-webkit-scrollbar{ height: 10px; }
     .storyScroller::-webkit-scrollbar-thumb{
@@ -306,10 +297,13 @@
     .egg{
       scroll-snap-align: start;
       flex: 0 0 auto;
+
       width: 96px;
       height: 96px;
+
       display:grid;
       place-items:center;
+
       border-radius: 18px;
       border: 1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.03);
@@ -327,43 +321,52 @@
       user-select:none;
     }
 
-    /* Desktop arrows (like browser Facebook stories) */
+    /* Desktop arrows */
     .storyBtn{
       position:absolute;
       top:50%;
       transform: translateY(-50%);
-      z-index: 5;
+      z-index: 10;
 
-      width: 38px;
-      height: 38px;
+      width: 40px;
+      height: 40px;
       border-radius: 999px;
 
-      display:none;                 /* shown only on desktop */
+      display:none; /* desktop only */
       place-items:center;
 
-      border: 1px solid rgba(255,255,255,.16);
-      background: rgba(0,0,0,.55);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      box-shadow: 0 14px 40px rgba(0,0,0,.55);
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(0,0,0,.62);
+      color: #ffffff;
 
+      box-shadow: 0 14px 40px rgba(0,0,0,.55);
       cursor:pointer;
       user-select:none;
+      padding:0;
     }
-    .storyBtn:hover{ background: rgba(0,0,0,.68); }
+    .storyBtn:hover{ background: rgba(0,0,0,.74); }
 
     .storyBtn.left{ left: 10px; }
     .storyBtn.right{ right: 10px; }
 
+    .storyBtn svg{
+      width: 18px;
+      height: 18px;
+      fill: none;
+      stroke: #ffffff;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
     @media (min-width: 921px){
       .storyBtn{ display:grid; }
-      /* add a tiny fade so arrows feel natural */
       .fadeEdge{
         position:absolute;
         top:0; bottom:0;
-        width: 54px;
+        width: 60px;
         pointer-events:none;
-        z-index: 3;
+        z-index: 5;
       }
       .fadeEdge.left{
         left:0;
@@ -464,19 +467,21 @@
           </div>
         </div>
 
-        <!-- ✅ Story-style showcase -->
+        <!-- ✅ Egg showcase -->
         <div class="card showcaseCard">
           <h2><span class="grad">Egg icon showcase</span></h2>
           <p class="showcaseHint">Swipe on mobile • Use arrows on desktop</p>
 
           <div class="storyWrap">
-            <!-- desktop fades -->
             <div class="fadeEdge left"></div>
             <div class="fadeEdge right"></div>
 
-            <!-- desktop buttons -->
-            <button class="storyBtn left" type="button" aria-label="Scroll left" id="btnLeft">‹</button>
-            <button class="storyBtn right" type="button" aria-label="Scroll right" id="btnRight">›</button>
+            <button class="storyBtn left" type="button" aria-label="Scroll left" id="btnLeft">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <button class="storyBtn right" type="button" aria-label="Scroll right" id="btnRight">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
 
             <div class="storyScroller" id="storyScroller" aria-label="Egg icon scroller">
               <div class="egg"><img src="eggs_images/egg_01.png" alt="Egg icon 1"></div>
@@ -522,33 +527,54 @@
     </div>
   </div>
 
-  <!-- Floating button: goes to TOP of this page -->
   <a class="home-fab" href="#top" aria-label="Back to top">Back to Top</a>
 
   <script>
     // footer year
     document.getElementById("y").textContent = new Date().getFullYear();
 
-    // Desktop arrows (Facebook-story style)
+    // Desktop arrows work + mobile drag locks horizontal when user drags inside scroller
     (function(){
       const scroller = document.getElementById("storyScroller");
-      const left = document.getElementById("btnLeft");
-      const right = document.getElementById("btnRight");
-      if(!scroller || !left || !right) return;
+      const leftBtn = document.getElementById("btnLeft");
+      const rightBtn = document.getElementById("btnRight");
+      if(!scroller) return;
 
+      // --- Buttons (PC like Facebook stories) ---
       function step(){
-        // scroll by ~3 items (responsive)
+        // scroll by ~3 items
         const first = scroller.querySelector(".egg");
-        const itemW = first ? first.getBoundingClientRect().width : 96;
-        return Math.round(itemW * 3.2);
+        const w = first ? first.getBoundingClientRect().width : 96;
+        return Math.round(w * 3.2);
       }
+      if(leftBtn) leftBtn.addEventListener("click", () => scroller.scrollBy({ left: -step(), behavior: "smooth" }));
+      if(rightBtn) rightBtn.addEventListener("click", () => scroller.scrollBy({ left: step(), behavior: "smooth" }));
 
-      left.addEventListener("click", () => {
-        scroller.scrollBy({ left: -step(), behavior: "smooth" });
-      });
-      right.addEventListener("click", () => {
-        scroller.scrollBy({ left: step(), behavior: "smooth" });
-      });
+      // --- Mobile / touch: prevent page scroll while swiping horizontally on the scroller ---
+      // This is the "Facebook story" feel: when finger is on the rail, it scrolls the rail.
+      let startX = 0, startY = 0, locked = false;
+
+      scroller.addEventListener("touchstart", (e) => {
+        if (!e.touches || e.touches.length !== 1) return;
+        const t = e.touches[0];
+        startX = t.clientX;
+        startY = t.clientY;
+        locked = false;
+      }, { passive: true });
+
+      scroller.addEventListener("touchmove", (e) => {
+        if (!e.touches || e.touches.length !== 1) return;
+        const t = e.touches[0];
+        const dx = Math.abs(t.clientX - startX);
+        const dy = Math.abs(t.clientY - startY);
+
+        // once horizontal intent is detected, lock to horizontal and stop page scroll
+        if (!locked && dx > 6 && dx > dy) locked = true;
+
+        if (locked) {
+          e.preventDefault(); // ✅ stops the page from moving
+        }
+      }, { passive: false });
     })();
   </script>
 </body>
