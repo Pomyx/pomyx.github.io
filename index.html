@@ -267,6 +267,22 @@
     .chip strong{display:block; font-size:13px; margin-bottom:6px}
     .chip span{display:block; font-size:12px; color:var(--muted); line-height:1.35}
 
+    /* ✅ Technical details accordion */
+    .techSummary{
+      cursor: pointer;
+      list-style: none;
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--muted);
+      letter-spacing: .2px;
+    }
+    .techSummary::-webkit-details-marker{
+      display:none;
+    }
+    details[open] .techSummary{
+      color: var(--txt);
+    }
+
     .section{
       margin-top:18px;
       display:grid; grid-template-columns: 1fr 1fr 1fr;
@@ -468,7 +484,7 @@
           <div class="ctaRow">
             <a class="btn btnPrimary" href="#packs">View packs</a>
             <a class="btn" href="privacy_policy.html">Privacy policy</a>
-            <a class="btn btnDonate" href="donate.html" target="_blank" rel="noreferrer">Donate</a>
+            <a class="btn btnDonate" href="donate.html" target="_blank" rel="noreferrer">Support the project</a>
           </div>
         </div>
 
@@ -480,30 +496,33 @@
       </div>
     </section>
 
-    <section class="infoSection" aria-label="Quick info">
-      <div class="infoHeader">
-        <p class="miniTitle">Quick info</p>
-      </div>
+    <!-- ✅ Replaced 4 Quick info cards with a Technical details accordion -->
+    <section class="infoSection" aria-label="Technical details">
+      <details>
+        <summary class="techSummary">Technical details</summary>
 
-      <div class="grid">
-        <div class="chip">
-          <strong>Recommended launcher</strong>
-          <span>Nova</span>
+        <div class="grid" style="margin-top:14px">
+          <div class="chip">
+            <strong>Recommended launcher</strong>
+            <span>Nova</span>
+          </div>
+          <div class="chip">
+            <strong>Goal</strong>
+            <span>Custom, unique shaped icons for Android launchers - tested on Nova</span>
+          </div>
+          <div class="chip">
+            <strong>Platform</strong>
+            <span>Android • CandyBar dashboard</span>
+          </div>
+          <div class="chip">
+            <strong>Status</strong>
+            <span>
+              First pack: Easter (to be released soon)<br>
+              Next pack: St. Patrick (in progress)
+            </span>
+          </div>
         </div>
-        <div class="chip">
-          <strong>Goal</strong>
-          <span>Custom, unique shaped icons for Android launchers - tested on Nova</span>
-        </div>
-        <div class="chip">
-          <strong>Platform</strong>
-          <span>Android • CandyBar dashboard</span>
-        </div>
-        <div class="chip">
-          <strong>Status</strong>
-          <span>First pack: Easter (to be released soon)
-          Next pack: St. Patrick (in progress)</span>
-        </div>
-      </div>
+      </details>
     </section>
 
     <section id="packs" class="section" aria-label="Icon packs">
