@@ -9,24 +9,23 @@
   <link rel="icon" href="pomyx_logo.png" type="image/png">
   <link rel="apple-touch-icon" href="pomyx_logo.png">
 
-<!-- Open Graph / Social preview -->
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Pomyx Icons">
-<meta property="og:locale" content="en_US">
-<meta property="og:title" content="Pomyx Easter Icon Pack">
-<meta property="og:description" content="Spring-themed Easter icon pack for Android launchers by Pomyx.">
-<meta property="og:url" content="https://pomyx.github.io/easter.html">
-<meta property="og:image" content="https://pomyx.github.io/pomyx_easter_playstore.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
+  <!-- Open Graph / Social preview -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Pomyx Icons">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="Pomyx Easter Icon Pack">
+  <meta property="og:description" content="Spring-themed Easter icon pack for Android launchers by Pomyx.">
+  <meta property="og:url" content="https://pomyx.github.io/easter.html">
+  <meta property="og:image" content="https://pomyx.github.io/pomyx_easter_playstore.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
 
-<!-- Twitter / X preview -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Pomyx Easter Icon Pack">
-<meta name="twitter:description" content="Spring-themed Easter icon pack for Android launchers by Pomyx.">
-<meta name="twitter:image" content="https://pomyx.github.io/pomyx_easter_playstore.png">
+  <!-- Twitter / X preview -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Pomyx Easter Icon Pack">
+  <meta name="twitter:description" content="Spring-themed Easter icon pack for Android launchers by Pomyx.">
+  <meta name="twitter:image" content="https://pomyx.github.io/pomyx_easter_playstore.png">
 
-  
   <style>
     :root{
       --bg0:#07070b;
@@ -82,7 +81,7 @@
       box-shadow: var(--shadow);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
-      flex-wrap: wrap; /* HARD FIX: prevents layout break on narrower widths */
+      flex-wrap: wrap; /* prevents layout break on narrower widths */
     }
 
     .brand{
@@ -158,17 +157,12 @@
       box-shadow: var(--shadow);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
-
-      /* slightly smaller padding so cards don't feel "too big" */
       padding: 14px;
-
-      /* HARD FIX: grid item (right video card) must NOT stretch height */
       height: auto;
       min-height: 0;
       align-self: start;
       min-width: 0;
     }
-    /* Left column cards should fill column width nicely */
     .leftcol .card{ align-self: stretch; }
 
     /* Title gradient */
@@ -228,12 +222,6 @@
       background: linear-gradient(180deg, rgba(255,124,200,.14), rgba(255,255,255,.04));
     }
 
-    .small{
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 10px;
-    }
-
     .sep{
       height:1px;
       background: rgba(255,255,255,.10);
@@ -285,13 +273,11 @@
       line-height: 1.35;
     }
 
-    /* Smaller window, centered */
     .storyWindow{
       width: min(520px, calc(100% - 12px));
       margin: 0 auto;
     }
 
-    /* Fixed height so it can NEVER stretch the page */
     .storyWrap{
       position: relative;
       height: 118px;
@@ -303,7 +289,6 @@
       min-height: 0;
     }
 
-    /* Scroll container */
     .storyScroller{
       height: 100%;
       overflow: hidden;
@@ -361,7 +346,6 @@
       background: linear-gradient(270deg, rgba(0,0,0,.65), transparent);
     }
 
-    /* Desktop arrow buttons */
     .storyBtn{
       position:absolute;
       top:50%;
@@ -409,7 +393,6 @@
       text-align:center;
     }
 
-    /* Floating "Top" button */
     .home-fab{
       position: fixed;
       right: 16px;
@@ -472,22 +455,12 @@
 
           <div class="sep"></div>
 
-          <h2><span class="grad">Closed testing</span></h2>
-          <p class="desc">
-            If you’re in my closed test list, you can install it from Play and help me test the release build.
-          </p>
-
           <div class="btnrow">
-            <a class="btn primary" href="https://play.google.com/apps/testing/com.pomyx.iconpack.easter" target="_blank" rel="noopener">
-              Join closed test
+            <a class="btn primary"
+               href="https://play.google.com/store/apps/details?id=com.pomyx.iconpack.easter&pcampaignid=web_share"
+               target="_blank" rel="noopener">
+              Get it on Google Play
             </a>
-            <a class="btn" href="https://play.google.com/store/apps/details?id=com.pomyx.iconpack.easter" target="_blank" rel="noopener">
-              Open Play listing
-            </a>
-          </div>
-
-          <div class="small">
-            Tip: open the “Join closed test” link first, then install from the Play listing.
           </div>
         </div>
 
