@@ -1,13 +1,12 @@
 {
-  "latestVersion": "1.11",
-  "latestVersionCode": 111,
-  "url": "https://play.google.com/store/apps/details?id=com.pomyx.iconpack.easter",
-  "releaseNotes": [
-    "New icons have been added to the pack",
-    "Improved icon mappings for better compatibility",
-    "Minor visual refinements and optimizations",
-    
-    "If you enjoy this icon pack, consider supporting the developer",
-    "Your support helps keep this project alive and growing"
-  ]
+    "latestVersion": "1.6",
+    "latestVersionCode": 16,
+    "url": "https://play.google.com/store/apps/details?id=com.pomyx.iconpack.easter",
+    "releaseNotes": [
+        "Added new Easter-themed icons",
+        "Improved icon consistency and visual balance",
+        "Minor UI refinements",
+        "Performance optimizations",
+        "Stability improvements for Android 15+"
+    ]
 }
