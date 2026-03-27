@@ -1,1 +1,29 @@
-
+{
+  "wallpapers": [
+    {
+      "name": "Easter 1",
+      "author": "Pomyx",
+      "url": "https://pomyx.github.io/wallpapers/easter/easter_01.jpg"
+    },
+    {
+      "name": "Easter 2",
+      "author": "Pomyx",
+      "url": "https://pomyx.github.io/wallpapers/easter/easter_02.jpg"
+    },
+    {
+      "name": "Easter 3",
+      "author": "Pomyx",
+      "url": "https://pomyx.github.io/wallpapers/easter/easter_03.jpg"
+    },
+    {
+      "name": "Easter 4",
+      "author": "Pomyx",
+      "url": "https://pomyx.github.io/wallpapers/easter/easter_04.jpg"
+    },
+    {
+      "name": "Easter 5",
+      "author": "Pomyx",
+      "url": "https://pomyx.github.io/wallpapers/easter/easter_05.jpg"
+    }
+  ]
+}
