@@ -1,29 +1,27 @@
-{
-  "wallpapers": [
-    {
-      "name": "Easter 1",
-      "author": "Pomyx",
-      "url": "https://pomyx.github.io/wallpapers/easter/easter_01.png"
-    },
-    {
-      "name": "Easter 2",
-      "author": "Pomyx",
-      "url": "https://pomyx.github.io/wallpapers/easter/easter_02.png"
-    },
-    {
-      "name": "Easter 3",
-      "author": "Pomyx",
-      "url": "https://pomyx.github.io/wallpapers/easter/easter_03.png"
-    },
-    {
-      "name": "Easter 4",
-      "author": "Pomyx",
-      "url": "https://pomyx.github.io/wallpapers/easter/easter_04.png"
-    },
-    {
-      "name": "Easter 5",
-      "author": "Pomyx",
-      "url": "https://pomyx.github.io/wallpapers/easter/easter_05.png"
-    }
-  ]
-}
+[
+  {
+    "name": "Easter 1",
+    "author": "Pomyx",
+    "url": "https://pomyx.github.io/wallpapers/easter/easter_01.png"
+  },
+  {
+    "name": "Easter 2",
+    "author": "Pomyx",
+    "url": "https://pomyx.github.io/wallpapers/easter/easter_02.png"
+  },
+  {
+    "name": "Easter 3",
+    "author": "Pomyx",
+    "url": "https://pomyx.github.io/wallpapers/easter/easter_03.png"
+  },
+  {
+    "name": "Easter 4",
+    "author": "Pomyx",
+    "url": "https://pomyx.github.io/wallpapers/easter/easter_04.png"
+  },
+  {
+    "name": "Easter 5",
+    "author": "Pomyx",
+    "url": "https://pomyx.github.io/wallpapers/easter/easter_05.png"
+  }
+]
